@@ -33,7 +33,7 @@ function Set-ManifestAttribute($AttributeName, $Value) {
 }
 
 Set-ManifestAttribute -AttributeName "Version" -Value "$version"
-Set-ManifestAttribute -AttributeName "Publisher" -Value "CN=WingetPkgsSelfhost"
+Set-ManifestAttribute -AttributeName "Publisher" -Value "CN=winget-pkgs-selfhost"
 
 .\01-generate-manifests.ps1
 Check-LastCommand "generate failed"
