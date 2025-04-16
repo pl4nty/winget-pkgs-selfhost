@@ -16,10 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup and run IndexCreationTool
-        continue-on-error: true
         run: |
           Invoke-WebRequest "${{ github.server_url }}/${{ github.repository }}/releases/latest/download/AppInstallerCLIE2ETests.zip" -OutFile AppInstallerCLIE2ETests.zip
-          Expand-Archive AppInstallerCLIE2ETests.zip -DestinationPath ..\AppInstallerCLIE2ETests
+          Expand-Archive AppInstallerCLIE2ETests.zip -DestinationPath ..\
           ..\AppInstallerCLIE2ETests\IndexCreationTool.exe -f source.json
       - name: Sign index
         uses: azure/trusted-signing-action@v0
