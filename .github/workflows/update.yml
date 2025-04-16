@@ -21,6 +21,9 @@ jobs:
         # TODO automatically try different architectures?
         # https://github.com/zodiacon
         # https://github.com/vinaypamnani/wmie2
+        # okta
+        # ipatool pending .tar.gz
+        # Kusto.Explorer pending ClickOnce
         include:
           - id: Microsoft.EventLogExpert
             repo: microsoft/EventLogExpert
