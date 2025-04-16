@@ -21,6 +21,8 @@ WinGet preindexed sources are packaged in MSIX files, which need to be signed by
 | `AZURE_SIGNING_ACCOUNT` | Trusted Signing account name |
 | `AZURE_SIGNING_PROFILE` | Trusted Signing certificate profile name |
 
+7. Update the `Publisher` property in [`AppxManifest.xml`](./package/AppxManifest.xml) to match the certificate profile's subject
+
 ## Usage
 
 In an administrative shell, run
