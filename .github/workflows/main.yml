@@ -17,9 +17,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup and run IndexCreationTool
         run: |
-          Invoke-WebRequest "${{ github.server_url }}/${{ github.repository }}/releases/latest/download/AppInstallerCLIE2ETests.zip" -OutFile ..\AppInstallerCLIE2ETests.zip
-          Expand-Archive ..\AppInstallerCLIE2ETests.zip -DestinationPath ..\
-          ..\AppInstallerCLIE2ETests\IndexCreationTool.exe -f source.json
+            Invoke-WebRequest "${{ github.server_url }}/${{ github.repository }}/releases/latest/download/AppInstallerCLIE2ETests.zip" -OutFile ..\AppInstallerCLIE2ETests.zip
+            Expand-Archive ..\AppInstallerCLIE2ETests.zip -DestinationPath ..\
+            
+            $version = Get-Date -Format yyyy.M.d.HHmm
+            (Get-Content -Path package/AppxManifest.xml) -replace "<VERSION>", $version | Set-Content -Path package/AppxManifest.xml
+            ..\AppInstallerCLIE2ETests\IndexCreationTool.exe -f source.json
+            git restore package\AppxManifest.xml
         env:
           PFX_PASSWORD: ${{ secrets.PFX_PASSWORD }}
 
