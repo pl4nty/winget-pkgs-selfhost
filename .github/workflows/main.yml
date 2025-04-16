@@ -22,6 +22,7 @@ jobs:
           ..\AppInstallerCLIE2ETests\IndexCreationTool.exe -f source.json
       - name: Sign index
         uses: azure/trusted-signing-action@v0
+        continue-on-error: true
         with:
           azure-tenant-id: ${{ vars.AZURE_TENANT_ID }}
           azure-client-id: ${{ vars.AZURE_CLIENT_ID }}
