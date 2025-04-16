@@ -1,0 +1,3 @@
+[Files]
+"D:\a\winget-pkgs-selfhost\winget-pkgs-selfhost\cache\index.db" "Public\index.db"
+"D:\a\winget-pkgs-selfhost\winget-pkgs-selfhost\cache\AppxManifest.xml" "AppxManifest.xml"
