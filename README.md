@@ -16,6 +16,7 @@ WinGet preindexed sources are packaged in MSIX files, which need to be signed by
 | Name | Value |
 | ---- | ----- |
 | `AZURE_SIGNING_ENDPOINT` | Trusted Signing endpoint, like `https://eus.codesigning.azure.net/` |
+| `AZURE_SIGNING_ACCOUNT` | Trusted Signing account name |
 | `AZURE_SIGNING_PROFILE` | Trusted Signing certificate profile name |
 
 ## Usage
