@@ -17,6 +17,8 @@ Installers:
     InstallerSha256: BEBD51CAAE775B4F45CF28BFCE1668590976310CC5A32C4D110E8E7201F4D73E
 ManifestType: merged
 ManifestVersion: 1.9.0
+InstallerSwitches:
+  Silent: /i
 PackageLocale: en-US
 Publisher: ralish
 PackageName: CertUiExts
