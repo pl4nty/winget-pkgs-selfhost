@@ -3,5 +3,9 @@
   "WorkingDirectory": "cache",
   "LocalManifests": [
     "manifests"
-  ]
+  ],
+  "Signature": {
+    "CertFile": "cert.pfx",
+    "CertPassword": "%PFX_PASSWORD%"
+  }
 }
