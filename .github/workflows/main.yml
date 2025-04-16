@@ -20,17 +20,32 @@ jobs:
           Invoke-WebRequest "${{ github.server_url }}/${{ github.repository }}/releases/latest/download/AppInstallerCLIE2ETests.zip" -OutFile AppInstallerCLIE2ETests.zip
           Expand-Archive AppInstallerCLIE2ETests.zip -DestinationPath ..\
           ..\AppInstallerCLIE2ETests\IndexCreationTool.exe -f source.json
+
+      - uses: azure/login@v1
+        with:
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          allow-no-subscriptions: true
       - name: Sign index
         uses: azure/trusted-signing-action@v0
         continue-on-error: true
         with:
-          azure-tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          azure-client-id: ${{ vars.AZURE_CLIENT_ID }}
           endpoint: ${{ vars.AZURE_SIGNING_ENDPOINT }}
           trusted-signing-account-name: ${{ vars.AZURE_SIGNING_ACCOUNT }}
           certificate-profile-name: ${{ vars.AZURE_SIGNING_PROFILE }}
           files-folder: cache
           files-folder-filter: msix
+          exclude-environment-credential: true
+          exclude-workload-identity-credential: true
+          exclude-managed-identity-credential: true
+          exclude-shared-token-cache-credential: true
+          exclude-visual-studio-credential: true
+          exclude-visual-studio-code-credential: true
+          exclude-azure-cli-credential: false
+          exclude-azure-powershell-credential: true
+          exclude-azure-developer-cli-credential: true
+          exclude-interactive-browser-credential: true
+
       - uses: EndBug/add-and-commit@v9.1.4
         with:
           default_author: github_actions
