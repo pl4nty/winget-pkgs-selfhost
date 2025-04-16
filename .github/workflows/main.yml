@@ -15,6 +15,32 @@ jobs:
     environment: dev
     steps:
       - uses: actions/checkout@v4
+      - name: Merge manifests
+        run: |
+          choco install yq
+
+          $TMP_MANIFESTS = "$env:TEMP\manifests"
+          New-Item -ItemType Directory -Path $TMP_MANIFESTS -Force
+          
+          $leafDirs = Get-ChildItem -Path "manifests" -Recurse -Directory | Where-Object { 
+            (Get-ChildItem -Path $_.FullName -Filter "*.yaml").Count -gt 0 
+          }
+          
+          foreach ($dir in $leafDirs) {
+            $yamlFiles = Get-ChildItem -Path $dir.FullName -Filter "*.yaml" | Select-Object -ExpandProperty FullName
+            
+            if ($yamlFiles.Count -gt 0) {
+              $packageId = $dir.Parent.Name
+              $version = $dir.Name
+              $outputFile = Join-Path -Path $TMP_MANIFESTS -ChildPath "$packageId-$version.yaml"
+              
+              # Start-Process and wildcards don't work
+              & yq ea '. as $item ireduce ({}; . * $item )' $yamlFiles[0] $yamlFiles[1] $yamlFiles[2] > $outputFile
+              & yq -i '.ManifestType = "merged"' $outputFile
+              & yq -i '... comments=""' $outputFile
+            }
+          }
+      
       - name: Setup and run IndexCreationTool
         run: |
             Invoke-WebRequest "${{ github.server_url }}/${{ github.repository }}/releases/latest/download/AppInstallerCLIE2ETests.zip" -OutFile ..\AppInstallerCLIE2ETests.zip

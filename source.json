@@ -2,7 +2,7 @@
   "AppxManifest": "package/AppxManifest.xml",
   "WorkingDirectory": "cache",
   "LocalManifests": [
-    "manifests"
+    "%TEMP%/manifests"
   ],
   "Signature": {
     "CertFile": "cert.pfx",
