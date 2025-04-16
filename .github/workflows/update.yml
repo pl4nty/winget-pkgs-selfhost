@@ -18,12 +18,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # https://github.com/zodiacon
+        # https://github.com/vinaypamnani/wmie2
         include:
           - id: Microsoft.EventLogExpert
             repo: microsoft/EventLogExpert
             url: https://github.com/microsoft/EventLogExpert/releases/download/v{VERSION}/EventLogExpert_{VERSION}_x64.msix
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Komac
+        run: |
+          curl https://github.com/pl4nty/Komac/releases/download/nightly/komac-nightly-x86_64-unknown-linux-gnu.tar.gz && tar -xzf komac-nightly-x86_64-unknown-linux-gnu.tar.gz
+          chmod +x komac
+          sudo mv komac /usr/local/bin/komac
+          rm komac-nightly-x86_64-unknown-linux-gnu.tar.gz
 
       # https://github.com/michidk/winget-updater/blob/main/action.yml
       - name: Detect latest release
