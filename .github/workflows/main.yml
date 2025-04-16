@@ -23,14 +23,13 @@ jobs:
       - name: Sign index
         uses: azure/trusted-signing-action@v0
         with:
+          azure-tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          azure-client-id: ${{ vars.AZURE_CLIENT_ID }}
           endpoint: ${{ vars.AZURE_SIGNING_ENDPOINT }}
           trusted-signing-account-name: ${{ vars.AZURE_SIGNING_ACCOUNT }}
           certificate-profile-name: ${{ vars.AZURE_SIGNING_PROFILE }}
           files-folder: cache
           files-folder-filter: msix
-          # azure-tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          # azure-client-id: ${{ vars.AZURE_CLIENT_ID }}
-          # azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
       - uses: EndBug/add-and-commit@v9.1.4
         with:
           default_author: github_actions

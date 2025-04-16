@@ -10,11 +10,13 @@ WinGet preindexed sources are packaged in MSIX files, which need to be signed by
 2. [Create an app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
 3. [Add a federated credential for the repository](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp#github-actions)
 4. [Setup an Azure Trusted Signing certificate profile](https://learn.microsoft.com/en-us/azure/trusted-signing/quickstart)
-5. [Assign Trusted Signing Certificate Profile Signer to the app](https://learn.microsoft.com/en-us/azure/trusted-signing/tutorial-assign-roles)
+5. [Assign Trusted Signing Certificate Profile Signer to the app registration](https://learn.microsoft.com/en-us/azure/trusted-signing/tutorial-assign-roles)
 6. [Create the following variables](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository)
 
 | Name | Value |
 | ---- | ----- |
+| `AZURE_TENANT_ID` | App registration tenant ID |
+| `AZURE_CLIENT_ID` | App registration client ID |
 | `AZURE_SIGNING_ENDPOINT` | Trusted Signing endpoint, like `https://eus.codesigning.azure.net/` |
 | `AZURE_SIGNING_ACCOUNT` | Trusted Signing account name |
 | `AZURE_SIGNING_PROFILE` | Trusted Signing certificate profile name |
