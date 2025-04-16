@@ -27,4 +27,4 @@ WinGet preindexed sources are packaged in MSIX files, which need to be signed by
 
 In an administrative shell, run
 
-`winget source add --name selfhost --type Microsoft.PreIndexed.Package --Argument https://github.com/pl4nty/winget-pkgs-selfhost/raw/main/cache`
+`winget source add --name selfhost --type Microsoft.PreIndexed.Package --arg https://github.com/pl4nty/winget-pkgs-selfhost/raw/main/cache`

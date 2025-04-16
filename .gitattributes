@@ -1,0 +1,2 @@
+# prevent git from modifying line endings on checkout and causing hash mismatch
+manifests/*.yaml binary
