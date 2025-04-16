@@ -6,6 +6,6 @@
   ],
   "Signature": {
     "CertFile": "cert.pfx",
-    "CertPassword": "%PFX_PASSWORD%"
+    "Password": "%PFX_PASSWORD%"
   }
 }
