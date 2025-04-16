@@ -1,0 +1,7 @@
+{
+  "AppxManifest": "package/AppxManifest.xml",
+  "WorkingDirectory": "cache",
+  "LocalManifests": [
+    "manifests"
+  ]
+}

@@ -1,0 +1,37 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  main:
+    runs-on: windows-2025
+    permissions:
+      contents: write
+      id-token: write
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup and run IndexCreationTool
+        run: |
+          Invoke-WebRequest "{{ github.server_url }}/{{ github.repository }}/releases/latest/download/IndexCreationTool.exe" -OutFile IndexCreationTool.exe
+          IndexCreationTool.exe -f source.json
+      - name: Sign index
+        uses: azure/trusted-signing-action@v0
+        with:
+          # azure-tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          # azure-client-id: ${{ vars.AZURE_CLIENT_ID }}
+          # azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          endpoint: https://eus.codesigning.azure.net/
+          # trusted-signing-account-name: vscx-codesigning
+          certificate-profile-name: "{{ vars.AZURE_SIGNING_PROFILE }}"
+          files-folder: cache
+          files-folder-filter: msix
+      - uses: EndBug/add-and-commit@v9.1.4
+        with:
+          default_author: github_actions
+          message: "chore: regenerate cache"
+          pull: "--rebase --autostash"

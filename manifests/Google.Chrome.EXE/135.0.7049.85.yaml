@@ -1,0 +1,108 @@
+PackageIdentifier: Google.Chrome.EXE
+PackageVersion: 135.0.7049.85
+Icons:
+- IconUrl: https://cdn.winget.microsoft.com/icons/fbc4efdde8bb8b3e2c14aa09e76d56f445338073aa3a1daeb1d9a9b631411334.ico
+  IconFileType: ico
+  IconResolution: custom
+  IconTheme: default
+  IconSha256: fbc4efdde8bb8b3e2c14aa09e76d56f445338073aa3a1daeb1d9a9b631411334
+Tags:
+- browser
+- chromium
+- internet
+- web
+- webpage
+PackageLocale: en-US
+Author: Google LLC
+Copyright: Copyright 2024 Google LLC. All rights reserved.
+Description: "A more simple, secure, and faster web browser than ever, with Google\u2019s
+  smarts built-in."
+ShortDescription: The browser built by Google
+License: Freeware
+LicenseUrl: https://www.google.com/chrome/terms
+PackageName: Google Chrome (EXE)
+PackageUrl: https://www.google.com/chrome/
+PrivacyUrl: https://policies.google.com/privacy
+Publisher: Google LLC
+PublisherSupportUrl: https://support.google.com/
+PublisherUrl: https://www.google.com/
+Localization:
+- Tags:
+  - chromium
+  - nettleseren
+  PackageLocale: nb-NO
+  Author: Google LLC
+  Copyright: Copyright 2024 Google LLC. Med enerett.
+  Description: "Enklere, tryggere og raskere enn noensinne \u2013 med Googles smarte
+    funksjoner."
+  ShortDescription: Nettleseren fra Google
+  License: Gratis Programvare
+  LicenseUrl: https://www.google.com/intl/no/chrome/terms
+  PackageName: Google Chrome (EXE)
+  PackageUrl: https://www.google.com/intl/no/chrome/
+  PrivacyUrl: https://policies.google.com/privacy?hl=no
+  Publisher: Google LLC
+  PublisherSupportUrl: https://support.google.com/?hl=no
+  PublisherUrl: https://www.google.com/
+- Tags:
+  - chromium
+  - "\u4E92\u8054\u7F51"
+  - "\u6D4F\u89C8\u5668"
+  - "\u7F51\u9875"
+  PackageLocale: zh-CN
+  Author: Google LLC
+  Copyright: "\u7248\u6743\u6240\u6709 2024 Google LLC. \u4FDD\u7559\u6240\u6709\u6743\u5229\u3002"
+  Description: "\u5F97\u76CA\u4E8E Google \u667A\u80FD\u5DE5\u5177,Chrome \u73B0\u5728\u66F4\u6613\u7528\u3001\u66F4\u5B89\u5168\u3001\u66F4\u5FEB\u901F\u3002"
+  ShortDescription: "\u7531 Google \u6253\u9020\u7684\u6D4F\u89C8\u5668"
+  License: "\u514D\u8D39\u8F6F\u4EF6"
+  LicenseUrl: https://www.google.com/intl/zh-CN/chrome/terms
+  PackageName: Google Chrome (EXE)
+  PackageUrl: https://www.google.com/intl/zh-CN/chrome/
+  PrivacyUrl: https://policies.google.com/privacy?hl=zh-CN
+  Publisher: Google LLC
+  PublisherSupportUrl: https://support.google.com/?hl=zh-Hans
+  PublisherUrl: https://www.google.com/
+Installers:
+- Architecture: x64
+  InstallerType: exe
+  InstallerSha256: cd271ff28ac73b41ea4fc7bee65a9a3ada8ef8a3792dbd85112eb3c3e3fa3150
+  InstallerUrl: https://dl.google.com/release2/chrome/em3tpu3hbjhddrksjr2iu2s2qe_135.0.7049.85/135.0.7049.85_chrome_installer.exe
+  Scope: user
+  InstallerAbortsTerminal: false
+  InstallLocationRequired: false
+  RequireExplicitUpgrade: false
+  DisplayInstallWarnings: false
+  DownloadCommandProhibited: false
+  ArchiveBinariesDependOnPath: false
+  ProductCode: Google Chrome
+  UpgradeBehavior: install
+  FileExtensions:
+  - htm
+  - html
+  - pdf
+  - shtml
+  - svg
+  - webp
+  - xht
+  - xhtml
+  Protocols:
+  - http
+  - https
+  - mailto
+  - tel
+  ExpectedReturnCodes:
+  - InstallerReturnCode: 3
+    ReturnResponse: alreadyInstalled
+  - InstallerReturnCode: 4
+    ReturnResponse: downgrade
+  - InstallerReturnCode: 22
+    ReturnResponse: cancelledByUser
+  - InstallerReturnCode: 60
+    ReturnResponse: installInProgress
+  InstallerSwitches:
+    Custom: --do-not-launch-chrome
+    Log: --verbose-logging --log-file="<LOGPATH>"
+  InstallModes:
+  - silent
+ManifestVersion: 1.10.0
+ManifestType: merged
