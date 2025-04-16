@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://github.com/microsoft/winget-cli/raw/master/schemas/JSON/manifests/v1.10.0/manifest.singleton.1.10.0.json
 
-PackageIdentifier: Microsoft.GlobalSecureAccessClient
+PackageIdentifier: Selfhost.MsftGlobalSecureAccessClient
 PackageVersion: 2.14.80.0
 PackageLocale: en-US
 Publisher: Microsoft Corporation

@@ -1,4 +1,4 @@
-PackageIdentifier: Google.Chrome.EXE
+PackageIdentifier: Selfhost.Google-Chrome-EXE
 PackageVersion: 135.0.7049.85
 Icons:
 - IconUrl: https://cdn.winget.microsoft.com/icons/fbc4efdde8bb8b3e2c14aa09e76d56f445338073aa3a1daeb1d9a9b631411334.ico
