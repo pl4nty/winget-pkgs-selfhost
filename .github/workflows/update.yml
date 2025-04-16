@@ -22,8 +22,8 @@ jobs:
         # https://github.com/zodiacon
         # https://github.com/vinaypamnani/wmie2
         # okta
-        # ipatool pending .tar.gz
-        # Kusto.Explorer pending ClickOnce
+        # pending .tar.gz: ipatool, buildkit, containerd
+        # pending ClickOnce: Kusto.Explorer
         include:
           - id: Microsoft.EventLogExpert
             repo: microsoft/EventLogExpert
