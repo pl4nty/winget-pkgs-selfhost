@@ -79,7 +79,7 @@ jobs:
       #     exclude-azure-developer-cli-credential: true
       #     exclude-interactive-browser-credential: true
       - name: Upload to blob storage
-        run: az storage blob upload-batch --source cache --destination cache --account-name wingetselfhost --auth-mode login
+        run: az storage blob upload-batch --source cache --destination cache --account-name wingetselfhost --auth-mode login --overwrite
 
       - uses: EndBug/add-and-commit@v9.1.4
         with:
