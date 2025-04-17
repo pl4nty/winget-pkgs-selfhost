@@ -1,0 +1,20 @@
+PackageIdentifier: Microsoft.ConfigMgr.SendSchedule
+PackageVersion: 5.0.9128.1007
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+  - RelativeFilePath: SendSchedule.exe
+UpgradeBehavior: install
+ReleaseDate: 2025-04-17
+Installers:
+  - Architecture: x86
+    InstallerUrl: https://wingetselfhost.blob.core.windows.net/install/Microsoft.ConfigMgr.SendSchedule/Microsoft.ConfigMgr.SendSchedule.zip
+    InstallerSha256: BCC56C4E385FD576A599142930EF21611B42AD4A933BD4A68CBB151B023C7DC7
+ManifestType: merged
+ManifestVersion: 1.9.0
+PackageLocale: en-US
+Publisher: Microsoft Corporation
+PackageName: ConfigMgr Send Schedule
+License: Proprietary
+ShortDescription: The Send Schedule Tool is one of the Configuration Manager tools. Use it to trigger a schedule on a client or trigger the evaluation of a specified configuration baseline.
+DefaultLocale: en-US

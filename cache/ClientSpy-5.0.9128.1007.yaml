@@ -1,0 +1,18 @@
+PackageIdentifier: Microsoft.ConfigMgr.ClientSpy
+PackageVersion: 5.0.9128.1007
+InstallerType: portable
+UpgradeBehavior: install
+ReleaseDate: 2025-04-17
+Installers:
+  - Architecture: x86
+    InstallerUrl: https://wingetselfhost.blob.core.windows.net/install/Microsoft.ConfigMgr.ClientSpy/CliSpy.exe
+    InstallerSha256: BCAD0DCA8F2AD3A64A651E239A713EBA44199C06B34169FA3F7A2301C619ECFF
+ManifestType: merged
+ManifestVersion: 1.9.0
+PackageLocale: en-US
+Publisher: Microsoft Corporation
+PackageName: Microsoft Configuration Manager
+License: Proprietary
+Copyright: Copyright (C) Microsoft Corporation. All rights reserved.
+ShortDescription: Client Spy is one of the Configuration Manager tools. It's a tool for troubleshooting software distribution, inventory, and software metering on Configuration Manager clients.
+DefaultLocale: en-US

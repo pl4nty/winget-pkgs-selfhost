@@ -1,0 +1,18 @@
+PackageIdentifier: Microsoft.ConfigMgr.PowerViewer
+PackageVersion: 5.0.9128.1007
+InstallerType: portable
+UpgradeBehavior: install
+ReleaseDate: 2025-04-17
+Installers:
+  - Architecture: x86
+    InstallerUrl: https://wingetselfhost.blob.core.windows.net/install/Microsoft.ConfigMgr.PowerViewer/PowerVwr.exe
+    InstallerSha256: AC75026A2B7942ED8D4C6E890925B4B45428D14C7D94EAA1896100E853D064CC
+ManifestType: merged
+ManifestVersion: 1.9.0
+PackageLocale: en-US
+Publisher: Microsoft Corporation
+PackageName: Microsoft Configuration Manager
+License: Proprietary
+Copyright: Copyright (C) Microsoft Corporation. All rights reserved.
+ShortDescription: The Power Viewer tool is one of the Configuration Manager tools. Use it to view the status of the power management feature on a Configuration Manager client.
+DefaultLocale: en-US
