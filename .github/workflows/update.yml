@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      id-token: write
     outputs:
       updated: ${{ steps.commit.outputs.pushed }}
     strategy:
