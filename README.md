@@ -4,7 +4,7 @@ Host your own WinGet packages directly from GitHub.
 
 ## Getting Started
 
-WinGet preindexed sources are packaged in MSIX files, which need to be signed by a trusted certificate. You can bring your own by modifying `[main.yml](.github/workflows/main.yml)`, or use Azure Trusted Signing (currently closed to new users).
+WinGet preindexed sources are packaged in MSIX files, which need to be signed by a trusted certificate. You can bring your own by modifying [`main.yml`](.github/workflows/main.yml), or use Azure Trusted Signing (currently closed to new users).
 
 1. [Click here](https://github.com/new?template_name=winget-pkgs-selfhost&template_owner=pl4nty) to create a repository
 2. [Create an app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
