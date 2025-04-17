@@ -54,11 +54,11 @@ jobs:
         env:
           PFX_PASSWORD: ${{ secrets.PFX_PASSWORD }}
 
-      # - uses: azure/login@v1
-      #   with:
-      #     tenant-id: ${{ vars.AZURE_TENANT_ID }}
-      #     client-id: ${{ vars.AZURE_CLIENT_ID }}
-      #     allow-no-subscriptions: true
+      - uses: azure/login@v1
+        with:
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          allow-no-subscriptions: true
       # - name: Sign index
       #   uses: azure/trusted-signing-action@v0
       #   continue-on-error: true
@@ -78,6 +78,8 @@ jobs:
       #     exclude-azure-powershell-credential: true
       #     exclude-azure-developer-cli-credential: true
       #     exclude-interactive-browser-credential: true
+      - name: Upload to blob storage
+        run: az storage blob upload-batch --source cache --destination cache --account-name winget-selfhost --auth-mode login
 
       - uses: EndBug/add-and-commit@v9.1.4
         with:
