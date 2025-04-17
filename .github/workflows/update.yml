@@ -28,9 +28,10 @@ jobs:
           - id: Microsoft.EventLogExpert
             repo: microsoft/EventLogExpert
             url: https://github.com/microsoft/EventLogExpert/releases/download/v{VERSION}/EventLogExpert_{VERSION}_x64.msix
-          - id: ralish.CertUiExts
-            repo: ralish/CertUiExts
-            url: https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x64.zip https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x86.zip
+          # prerelease, I think one of the forks supports this
+          # - id: ralish.CertUiExts
+          #   repo: ralish/CertUiExts
+          #   url: https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x64.zip https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x86.zip
     steps:
       - uses: actions/checkout@v4
       - name: Setup Komac
