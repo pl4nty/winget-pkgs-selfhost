@@ -78,7 +78,7 @@ jobs:
   main:
     uses: ./.github/workflows/main.yml
     needs: update
-    if: ${{ needs.update.outputs.updated }}
+    if: ${{ needs.update.outputs.updated == "true" }}
     permissions:
       contents: write
       id-token: write
