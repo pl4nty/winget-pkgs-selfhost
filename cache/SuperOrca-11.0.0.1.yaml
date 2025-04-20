@@ -1,0 +1,22 @@
+PackageIdentifier: Pantaray.SuperOrca
+PackageVersion: 11.0.0.1
+InstallerType: exe
+InstallModes:
+  - interactive
+  - silent
+InstallerSwitches:
+  Silent: /silent
+UpgradeBehavior: install
+Installers:
+  - Architecture: x86
+    InstallerUrl: https://web.archive.org/web/20210909100009/http://www.pantaray.com/SuperOrcaSetup.exe
+    InstallerSha256: 68ED565438E206E805F81980374E6439E6F4F60F63A3FCB6F0840C8A8DE189DA
+ManifestType: merged
+ManifestVersion: 1.9.0
+PackageLocale: en-US
+Publisher: Pantaray Research Ltd.
+PackageName: QSetup Installation Suite
+License: Proprietary
+Copyright: Copyright (C) 2002-2012, Pantaray Research Ltd.
+ShortDescription: SuperOrca from "Pantaray Research Ltd." is a direct replacement to the "Orca" MSI Editor from Microsoft. SuperOrca may be used to examine and modify an MSI database in order to distribute a new MSI package.
+DefaultLocale: en-US
