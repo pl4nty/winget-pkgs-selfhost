@@ -1,0 +1,17 @@
+PackageIdentifier: ShunsukeSuzuki.AsciinemaTrim
+PackageVersion: 0.1.2
+InstallerType: portable
+UpgradeBehavior: install
+ReleaseDate: 2025-04-20
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://wingetselfhost.blob.core.windows.net/install/ShunsukeSuzuki.AsciinemaTrim/asciinema-trim.exe
+    InstallerSha256: 2643A42EA3E607AFFA66E949185483370B6FE433FF79B32DF6FC308BBAA67BED
+ManifestType: merged
+ManifestVersion: 1.9.0
+PackageLocale: en-US
+Publisher: Shunsuke Suzuki
+PackageName: Asciinema Trim
+License: MIT
+ShortDescription: Trim and change the playback speed of asciinema's session
+DefaultLocale: en-US
