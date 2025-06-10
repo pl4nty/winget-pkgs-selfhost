@@ -1,0 +1,20 @@
+PackageIdentifier: vinaypamnani.WMIExplorer
+PackageVersion: 2.0.0.2
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+  - RelativeFilePath: WmiExplorer.exe
+UpgradeBehavior: install
+ReleaseDate: 2021-12-06
+Installers:
+  - Architecture: x86
+    InstallerUrl: https://github.com/vinaypamnani/wmie2/releases/download/v2.0.0.2/WmiExplorer_2.0.0.2.zip
+    InstallerSha256: 343695AE7BCD048DA51EBE0949BDF746F7C16F648746D9A4554B2CB888007851
+ManifestType: merged
+ManifestVersion: 1.9.0
+PackageLocale: en-US
+Publisher: vinaypamnani
+PackageName: WMI Explorer
+License: MIT
+ShortDescription: WMI Explorer is a utility intended to provide the ability to browse and view WMI namespaces/classes/instances/properties in a single pane of view and is inspired by the PowerShell based WMI Explorer written by Marc.
+DefaultLocale: en-US
