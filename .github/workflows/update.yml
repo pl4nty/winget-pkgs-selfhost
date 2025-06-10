@@ -64,7 +64,7 @@ jobs:
           echo "Detected latest Version: ${{ steps.latest_release.outputs.result }}"
           echo "Final URL: $FINAL_URL"
       - name: Run Komac
-        shell: bash
+        shell: 'script -q -e -a /dev/null -c "bash {0}"'
         continue-on-error: true
         run: /home/runner/.local/bin/komac update ${{ matrix.id }} --version ${{ steps.latest_release.outputs.result }} --urls $FINAL_URL --output . --dry-run
 
