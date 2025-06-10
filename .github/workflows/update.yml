@@ -67,6 +67,8 @@ jobs:
         shell: 'script -q -e -a /dev/null -c "bash {0}"'
         continue-on-error: true
         run: /home/runner/.local/bin/komac update ${{ matrix.id }} --version ${{ steps.latest_release.outputs.result }} --urls $FINAL_URL --output . --dry-run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: EndBug/add-and-commit@v9.1.4
         id: commit
