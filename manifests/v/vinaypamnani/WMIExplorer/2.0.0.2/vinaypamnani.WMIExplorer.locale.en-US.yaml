@@ -1,12 +1,21 @@
-# Created with komac v2.11.2
-# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.9.0.schema.json
+# Created with komac v2.12.0
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.10.0.schema.json
 
 PackageIdentifier: vinaypamnani.WMIExplorer
 PackageVersion: 2.0.0.2
 PackageLocale: en-US
 Publisher: vinaypamnani
+PublisherUrl: https://github.com/vinaypamnani
+PublisherSupportUrl: https://github.com/vinaypamnani/wmie2/issues
 PackageName: WMI Explorer
+PackageUrl: https://github.com/vinaypamnani/wmie2
 License: MIT
+LicenseUrl: https://github.com/vinaypamnani/wmie2/blob/HEAD/LICENSE.md
 ShortDescription: WMI Explorer is a utility intended to provide the ability to browse and view WMI namespaces/classes/instances/properties in a single pane of view and is inspired by the PowerShell based WMI Explorer written by Marc.
+ReleaseNotes: |-
+  Version 2.0.0.2 [10-05-2017]
+  - Migration to GitHub.
+  - Added option to specify COMPUTERNAME as a parameter and automatically connect.
+    Example: WmiExplorer.exe COMPUTERNAME
 ManifestType: defaultLocale
-ManifestVersion: 1.9.0
+ManifestVersion: 1.10.0
