@@ -35,7 +35,7 @@ jobs:
         run: |
           wget https://github.com/pl4nty/Komac/releases/download/nightly/komac-nightly-x86_64-unknown-linux-gnu.tar.gz && tar -xzf komac-nightly-x86_64-unknown-linux-gnu.tar.gz
           chmod +x komac
-          sudo mv komac /usr/local/bin/komac
+          sudo mv komac /home/runner/.local/bin/komac
           rm komac-nightly-x86_64-unknown-linux-gnu.tar.gz
 
       # https://github.com/michidk/winget-updater/blob/main/action.yml
