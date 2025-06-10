@@ -17,18 +17,23 @@ jobs:
       matrix:
         # TODO automatically try different architectures?
         # https://github.com/zodiacon
-        # https://github.com/vinaypamnani/wmie2
         # okta
         # pending .tar.gz: ipatool, buildkit, containerd
         # pending ClickOnce: Kusto.Explorer
         include:
-          - id: Microsoft.EventLogExpert
-            repo: microsoft/EventLogExpert
-            url: https://github.com/microsoft/EventLogExpert/releases/download/v{VERSION}/EventLogExpert_{VERSION}_x64.msix
           # prerelease, I think one of the forks supports this
           # - id: ralish.CertUiExts
           #   repo: ralish/CertUiExts
           #   url: https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x64.zip https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x86.zip
+          - id: Microsoft.EventLogExpert
+            repo: microsoft/EventLogExpert
+            url: https://github.com/microsoft/EventLogExpert/releases/download/v{VERSION}/EventLogExpert_{VERSION}_x64.msix
+          - id: WildByDesign.WDACTrayTool
+            repo: WildByDesign/WDACTrayTool
+            url: https://github.com/WildByDesign/WDACTrayTool/releases/download/{VERSION}/AppControlTray-{VERSION}.zip
+          - id: vinaypamnani.WMIExplorer
+            repo: vinaypamnani/wmie2
+            url: https://github.com/vinaypamnani/wmie2/releases/download/v{VERSION}/WmiExplorer_{VERSION}.zip
     steps:
       - uses: actions/checkout@v4
       - name: Setup Komac
@@ -74,7 +79,7 @@ jobs:
         id: commit
         with:
           default_author: github_actions
-          message: "chore: update versions"
+          message: "chore: update ${{ matrix.id }} to ${{ steps.latest_release.outputs.result }}"
           pull: "--rebase --autostash"
 
   main:
