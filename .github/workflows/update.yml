@@ -64,10 +64,9 @@ jobs:
           echo "Detected latest Version: ${{ steps.latest_release.outputs.result }}"
           echo "Final URL: $FINAL_URL"
       - name: Run Komac
-        uses: michidk/run-komac@v2.0.0
+        shell: bash
         continue-on-error: true
-        with:
-          args: update ${{ matrix.id }} --version ${{ steps.latest_release.outputs.result }} --urls $FINAL_URL --output . --dry-run
+        run: /home/runner/.local/bin/komac update ${{ matrix.id }} --version ${{ steps.latest_release.outputs.result }} --urls $FINAL_URL --output . --dry-run
 
       - uses: EndBug/add-and-commit@v9.1.4
         id: commit
