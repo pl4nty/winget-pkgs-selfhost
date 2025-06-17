@@ -7,7 +7,7 @@
   <Identity Name="Winget.Source.Selfhost"
     ProcessorArchitecture="neutral"
     Publisher="CN=Tom Plant, O=Tom Plant, L=Canberra, S=Australian Capital Territory, C=Australia"
-    Version="2025.6.17.853" />
+    Version="2025.6.17.857" />
 
   <Properties>
     <DisplayName>WinGet Selfhost Source</DisplayName>
