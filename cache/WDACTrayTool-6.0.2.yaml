@@ -1,17 +1,23 @@
 PackageIdentifier: WildByDesign.WDACTrayTool
 PackageVersion: 6.0.2
 InstallerType: zip
-UpgradeBehavior: install
 ReleaseDate: 2025-05-04
 Installers:
   - Architecture: neutral
     InstallerUrl: https://github.com/WildByDesign/WDACTrayTool/releases/download/6.0.2/AppControlTray-6.0.2.zip
     InstallerSha256: 2E86FBCA5D29F51D05CF7C62DE92AA68451515389820E04EE083496E6BB30704
 ManifestType: merged
-ManifestVersion: 1.9.0
+ManifestVersion: 1.10.0
 PackageLocale: en-US
 Publisher: WildByDesign
+PublisherUrl: https://github.com/WildByDesign
+PublisherSupportUrl: https://github.com/WildByDesign/WDACTrayTool/issues
 PackageName: App Control Tray & Policy Manager
+PackageUrl: https://github.com/WildByDesign/WDACTrayTool
 License: GPL-3.0
+LicenseUrl: https://github.com/WildByDesign/WDACTrayTool/blob/HEAD/LICENSE
 ShortDescription: System Tray Tool for WDAC.
+ReleaseNotes: |-
+  Policy Manager:
+  - Fixed ListView checkboxes in dark mode
 DefaultLocale: en-US

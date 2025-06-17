@@ -1,0 +1,20 @@
+PackageIdentifier: Microsoft.eDiscoveryExportTool
+PackageVersion: 15.20.1771.0
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+  - RelativeFilePath: microsoft.office.client.discovery.unifiedexporttool.exe
+UpgradeBehavior: install
+Installers:
+  - Architecture: x86
+    InstallerUrl: https://wingetselfhost.blob.core.windows.net/install/Microsoft.eDiscoveryExportTool/Microsoft.Office.Client.Discovery.UnifiedExportTool.zip
+    InstallerSha256: 66C5E4C8EF975CDD0775D343AB3C1A5551C903ABBCB26415B13C73BB48BAF8F7
+ManifestType: merged
+ManifestVersion: 1.9.0
+PackageLocale: en-US
+Publisher: Microsoft Corporation
+PackageName: eDiscovery Export Tool
+PackageUrl: https://complianceclientsdf.blob.core.windows.net/v16/Microsoft.Office.Client.Discovery.UnifiedExportTool.manifest
+License: Proprietary
+ShortDescription: Use the eDiscovery Export Tool to download Microsoft Purview Content Search or eDiscovery search results.
+DefaultLocale: en-US

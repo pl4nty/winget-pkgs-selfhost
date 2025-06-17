@@ -15,6 +15,7 @@ ManifestVersion: 1.9.0
 PackageLocale: en-US
 Publisher: Microsoft Corporation
 PackageName: ConfigMgr UploadOfflineFeedback
+PackageUrl: https://go.microsoft.com/fwlink/?linkid=2237687
 License: Proprietary
 ShortDescription: Save your product feedback locally and submit it later.
 DefaultLocale: en-US
