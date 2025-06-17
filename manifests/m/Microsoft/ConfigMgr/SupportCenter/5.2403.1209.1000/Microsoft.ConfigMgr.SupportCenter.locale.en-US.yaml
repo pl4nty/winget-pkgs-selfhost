@@ -6,6 +6,7 @@ PackageVersion: 5.2403.1209.1000
 PackageLocale: en-US
 Publisher: Microsoft Corporation
 PackageName: ConfigMgr Support Center
+PackageUrl: https://go.microsoft.com/fwlink/?linkid=2237687
 License: Proprietary
 ShortDescription: Use Support Center for client troubleshooting, real-time log viewing, or capturing the state of a Configuration Manager client computer for later analysis.
 ManifestType: defaultLocale
