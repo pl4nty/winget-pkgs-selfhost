@@ -18,8 +18,8 @@ jobs:
         # TODO automatically try different architectures?
         # https://github.com/zodiacon
         # okta
-        # pending .tar.gz: ipatool, buildkit, containerd
-        # pending ClickOnce: Kusto.Explorer
+        # pending .tar.gz: ipatool, buildkit, containerd, AsciinemaTrim
+        # pending ClickOnce: Microsoft.Kusto.Explorer, Microsoft.eDiscoveryExportTool
         include:
           # prerelease, I think one of the forks supports this
           # - id: ralish.CertUiExts
