@@ -39,5 +39,6 @@ ReleaseNotes: |-
   - 15246da Bumps Batch Explorer development to version 2.22.0
   - eed3aa5 Merge branch 'stable' into main
   This list of changes was auto generated.
+ReleaseNotesUrl: https://github.com/Azure/BatchExplorer/releases/tag/v2.22.0-stable.1076
 ManifestType: defaultLocale
 ManifestVersion: 1.10.0
