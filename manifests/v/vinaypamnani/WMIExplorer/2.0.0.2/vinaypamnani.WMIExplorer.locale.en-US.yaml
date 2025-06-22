@@ -17,5 +17,6 @@ ReleaseNotes: |-
   - Migration to GitHub.
   - Added option to specify COMPUTERNAME as a parameter and automatically connect.
     Example: WmiExplorer.exe COMPUTERNAME
+ReleaseNotesUrl: https://github.com/vinaypamnani/wmie2/releases/tag/v2.0.0.2
 ManifestType: defaultLocale
 ManifestVersion: 1.10.0
