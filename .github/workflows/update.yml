@@ -25,6 +25,9 @@ jobs:
           # - id: ralish.CertUiExts
           #   repo: ralish/CertUiExts
           #   url: https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x64.zip https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x86.zip
+          - id: Microsoft.Azure.BatchExplorer
+            repo: Azure/BatchExplorer
+            url: https://github.com/Azure/BatchExplorer/releases/download/v{VERSION}/BatchExplorer.Setup.{VERSION}.exe
           - id: Microsoft.EventLogExpert
             repo: microsoft/EventLogExpert
             url: https://github.com/microsoft/EventLogExpert/releases/download/v{VERSION}/EventLogExpert_{VERSION}_x64.msix
