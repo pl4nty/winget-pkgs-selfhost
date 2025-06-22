@@ -15,5 +15,6 @@ ShortDescription: System Tray Tool for WDAC.
 ReleaseNotes: |-
   Policy Manager:
   - Fixed ListView checkboxes in dark mode
+ReleaseNotesUrl: https://github.com/WildByDesign/WDACTrayTool/releases/tag/6.0.2
 ManifestType: defaultLocale
 ManifestVersion: 1.10.0
