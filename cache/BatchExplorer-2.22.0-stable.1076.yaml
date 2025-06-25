@@ -2,6 +2,7 @@ PackageIdentifier: Microsoft.Azure.BatchExplorer
 PackageVersion: 2.22.0-stable.1076
 InstallerLocale: en-US
 InstallerType: nullsoft
+UpgradeBehavior: install
 ProductCode: ef4dcbd6-f9d0-51ec-ae84-09c95245167d
 ReleaseDate: 2024-12-06
 AppsAndFeaturesEntries:
@@ -49,4 +50,5 @@ ReleaseNotes: |-
   - 15246da Bumps Batch Explorer development to version 2.22.0
   - eed3aa5 Merge branch 'stable' into main
   This list of changes was auto generated.
+ReleaseNotesUrl: https://github.com/Azure/BatchExplorer/releases/tag/v2.22.0-stable.1076
 DefaultLocale: en-US

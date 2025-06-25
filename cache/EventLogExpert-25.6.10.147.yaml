@@ -40,4 +40,5 @@ ReleaseNotes: |-
   - 19e93dc Added executable alias to allow command line usage via eventlogexpert.exe
   - e217506 Added file option to open all event logs in a folder
   This list of changes was auto generated.
+ReleaseNotesUrl: https://github.com/microsoft/EventLogExpert/releases/tag/v25.6.10.147
 DefaultLocale: en-US
