@@ -21,7 +21,11 @@ jobs:
         # pending .tar.gz: ipatool, buildkit, containerd, AsciinemaTrim
         # pending ClickOnce: Microsoft.Kusto.Explorer, Microsoft.eDiscoveryExportTool
         include:
-          # prerelease, I think one of the forks supports this
+          # needs partial URL matching
+          # - id: NationalSecurityAgency.Ghidra
+          #   repo: NationalSecurityAgency/ghidra
+          #   url: https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_{VERSION}_build/ghidra_{VERSION}_PUBLIC_{DATE}.zip
+          # needs prerelease matching, I think one of the forks supports this
           # - id: ralish.CertUiExts
           #   repo: ralish/CertUiExts
           #   url: https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x64.zip https://github.com/ralish/CertUiExts/releases/download/v{VERSION}/CertUiExts-v{VERSION}-x86.zip
