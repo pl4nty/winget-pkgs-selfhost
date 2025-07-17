@@ -1,0 +1,18 @@
+PackageIdentifier: PavelYosifovich.ProcMonX
+PackageVersion: 2.0Beta1
+InstallerType: portable
+UpgradeBehavior: install
+ReleaseDate: 2021-12-07
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/zodiacon/ProcMonXv2/releases/download/2.0Beta1/ProcMonX.exe
+    InstallerSha256: 0D93440FAC083196F8523D43E6D196FE1E6483C33765DF31094EC457F3636511
+ManifestType: merged
+ManifestVersion: 1.9.0
+PackageLocale: en-US
+Publisher: Pavel Yosifovich
+PackageName: Process Monitor X v2
+License: MIT
+Copyright: (C)2020 Pavel Yosifovich
+ShortDescription: Procmon-like tool that uses Event Tracing for Windows (ETW) instead of a kernel driver to provide event information.
+DefaultLocale: en-US
