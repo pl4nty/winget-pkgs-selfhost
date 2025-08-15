@@ -53,6 +53,7 @@ jobs:
           mkdir -p /home/runner/.local/bin
           sudo mv komac /home/runner/.local/bin/komac
           rm komac-nightly-x86_64-unknown-linux-gnu.tar.gz
+          rm LICENSE.md
 
       # https://github.com/michidk/winget-updater/blob/main/action.yml
       - name: Detect latest release
