@@ -8,11 +8,15 @@ Installers:
     InstallerUrl: https://github.com/zodiacon/ProcMonXv2/releases/download/2.0Beta1/ProcMonX.exe
     InstallerSha256: 0D93440FAC083196F8523D43E6D196FE1E6483C33765DF31094EC457F3636511
 ManifestType: merged
-ManifestVersion: 1.9.0
+ManifestVersion: 1.10.0
 PackageLocale: en-US
 Publisher: Pavel Yosifovich
+PublisherUrl: https://github.com/zodiacon
+PublisherSupportUrl: https://github.com/zodiacon/ProcMonXv2/issues
 PackageName: Process Monitor X v2
+PackageUrl: https://github.com/zodiacon/ProcMonXv2
 License: MIT
+LicenseUrl: https://github.com/zodiacon/ProcMonXv2/blob/HEAD/LICENSE
 Copyright: (C)2020 Pavel Yosifovich
 ShortDescription: Procmon-like tool that uses Event Tracing for Windows (ETW) instead of a kernel driver to provide event information.
 DefaultLocale: en-US
