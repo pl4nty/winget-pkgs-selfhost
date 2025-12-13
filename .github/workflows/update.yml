@@ -45,7 +45,7 @@ jobs:
             repo: vinaypamnani/wmie2
             url: https://github.com/vinaypamnani/wmie2/releases/download/v{VERSION}/WmiExplorer_{VERSION}.zip
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Komac
         run: |
           wget https://github.com/pl4nty/Komac/releases/download/nightly/komac-nightly-x86_64-unknown-linux-gnu.tar.gz && tar -xzf komac-nightly-x86_64-unknown-linux-gnu.tar.gz

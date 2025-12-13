@@ -15,7 +15,7 @@ jobs:
       id-token: write
     environment: dev
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Merge manifests
         run: |
           choco install yq
