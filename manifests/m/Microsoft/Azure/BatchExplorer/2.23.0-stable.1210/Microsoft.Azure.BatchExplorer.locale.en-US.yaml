@@ -1,5 +1,5 @@
-# Created with komac v2.14.0
-# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.10.0.schema.json
+# Created with komac v2.15.0
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.12.0.schema.json
 
 PackageIdentifier: Microsoft.Azure.BatchExplorer
 PackageVersion: 2.23.0-stable.1210
@@ -34,4 +34,4 @@ ReleaseNotes: |-
   Full Changelog: v2.22.0-stable.1076...v2.23.0-stable.1210
 ReleaseNotesUrl: https://github.com/Azure/BatchExplorer/releases/tag/v2.23.0-stable.1210
 ManifestType: defaultLocale
-ManifestVersion: 1.10.0
+ManifestVersion: 1.12.0
