@@ -1,0 +1,27 @@
+# Created with komac v2.15.0
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.12.0.schema.json
+
+PackageIdentifier: Microsoft.EventLogExpert
+PackageVersion: 26.1.9.1322
+Platform:
+- Windows.Desktop
+- Windows.Universal
+MinimumOSVersion: 10.0.17763.0
+InstallerType: msix
+UpgradeBehavior: install
+FileExtensions:
+- evtx
+PackageFamilyName: EventLogExpert_8wekyb3d8bbwe
+RestrictedCapabilities:
+- packageManagement
+- runFullTrust
+ReleaseDate: 2026-01-09
+InstallationMetadata:
+  DefaultInstallLocation: '%ProgramFiles%/WindowsApps/EventLogExpert_26.1.9.1322_x64__8wekyb3d8bbwe'
+Installers:
+- Architecture: x64
+  InstallerUrl: https://github.com/microsoft/EventLogExpert/releases/download/v26.1.9.1322/EventLogExpert_26.1.9.1322_x64.msix
+  InstallerSha256: 4AD4D9ED4B83CE704577E558C90FFC5018BCCE17F4C0B62E6034E49508FAED1C
+  SignatureSha256: 240BE662A3B29B9F3718C1C4FCD2C16FA1BA317F659CD2DC864EE7B5186B482E
+ManifestType: installer
+ManifestVersion: 1.12.0
