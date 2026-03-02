@@ -7,7 +7,7 @@ Installers:
     InstallerUrl: https://github.com/WildByDesign/WDACTrayTool/releases/download/6.0.3/AppControlTray-6.0.3.zip
     InstallerSha256: 768CE2C15B6EBD6C6A25E157E257AC3BDC4C852B99FE19CD3E97442934FDC416
 ManifestType: merged
-ManifestVersion: 1.10.0
+ManifestVersion: 1.12.0
 PackageLocale: en-US
 Publisher: WildByDesign
 PublisherUrl: https://github.com/WildByDesign

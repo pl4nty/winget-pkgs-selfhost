@@ -14,7 +14,7 @@ Installers:
     InstallerUrl: https://github.com/vinaypamnani/wmie2/releases/download/v2.0.0.2/WmiExplorer_2.0.0.2.zip
     InstallerSha256: 343695AE7BCD048DA51EBE0949BDF746F7C16F648746D9A4554B2CB888007851
 ManifestType: merged
-ManifestVersion: 1.10.0
+ManifestVersion: 1.12.0
 PackageLocale: en-US
 Publisher: vinaypamnani
 PublisherUrl: https://github.com/vinaypamnani
