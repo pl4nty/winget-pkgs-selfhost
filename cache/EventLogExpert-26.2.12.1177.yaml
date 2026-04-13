@@ -1,0 +1,58 @@
+PackageIdentifier: Microsoft.EventLogExpert
+PackageVersion: 26.2.12.1177
+Platform:
+  - Windows.Desktop
+  - Windows.Universal
+MinimumOSVersion: 10.0.17763.0
+InstallerType: msix
+UpgradeBehavior: install
+FileExtensions:
+  - evtx
+PackageFamilyName: EventLogExpert_8wekyb3d8bbwe
+RestrictedCapabilities:
+  - packageManagement
+  - runFullTrust
+ReleaseDate: 2026-02-12
+InstallationMetadata:
+  DefaultInstallLocation: '%ProgramFiles%/WindowsApps/EventLogExpert_26.2.12.1177_x64__8wekyb3d8bbwe'
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/microsoft/EventLogExpert/releases/download/v26.2.12.1177/EventLogExpert_26.2.12.1177_x64.msix
+    InstallerSha256: 497A89206E34F837C2261BD7B59838F228281CF2486DF77341E1C83415DFB30B
+    SignatureSha256: 18D6569EFB7B306B91D43E6C45A443A7AFE2C1919A63470C56B62B3AFC59A919
+ManifestType: merged
+ManifestVersion: 1.12.0
+PackageLocale: en-US
+Publisher: Microsoft Corporation
+PublisherUrl: https://github.com/microsoft
+PublisherSupportUrl: https://github.com/microsoft/EventLogExpert/issues
+PackageName: EventLogExpert
+PackageUrl: https://github.com/microsoft/EventLogExpert
+License: MIT
+LicenseUrl: https://github.com/microsoft/EventLogExpert/blob/HEAD/LICENSE
+ShortDescription: A Windows Event Log viewer for tech support and IT professionals.
+Tags:
+  - event-log-expert
+  - evtx-files
+  - windows-event-log-viewer
+  - windowseventlogviewer
+ReleaseNotes: |-
+  Changes:
+  - 67098ee Added labels to sub filter and fixed issue with dropdown list being aria hidden
+  - a07e682 Added aria label for main table
+  - 7328987 Fixed aria labels in EventTable
+  - 17642c2 Fixed aria labels on ValueSelect
+  - 0aacf74 Updated section toggles to show current state
+  - f463011 Fixed spaces in id params
+  - 7ead433 Updated labels for section toggles
+  - 04b0fac Adjusted more labels
+  - e0003ee Disable forced color adjust
+  - 74e5772 Added tab and keyboard toggle support to dropdown toggles
+  See More
+  - 99e1a15 Added focus element to input components
+  - f465a01 Added error prompt when trying to rename filter group
+  - 87cb4c5 Added Aria labels to missing components
+  - 8975826 Moved title logic to resolve race condition
+  This list of changes was auto generated.
+ReleaseNotesUrl: https://github.com/microsoft/EventLogExpert/releases/tag/v26.2.12.1177
+DefaultLocale: en-US
