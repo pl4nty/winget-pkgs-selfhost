@@ -1,4 +1,4 @@
-# Created with komac v2.15.0
+# Created with komac v2.16.0
 # yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.12.0.schema.json
 
 PackageIdentifier: PavelYosifovich.ProcMonX
@@ -13,5 +13,6 @@ License: MIT
 LicenseUrl: https://github.com/zodiacon/ProcMonXv2/blob/HEAD/LICENSE
 Copyright: (C)2020 Pavel Yosifovich
 ShortDescription: Process Monitor X v2
+ReleaseNotesUrl: https://github.com/zodiacon/ProcMonXv2/releases/tag/2.0Beta1
 ManifestType: defaultLocale
 ManifestVersion: 1.12.0
