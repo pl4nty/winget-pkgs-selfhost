@@ -8,9 +8,9 @@ NestedInstallerType: portable
 NestedInstallerFiles:
 - RelativeFilePath: WmiExplorer.exe
   PortableCommandAlias: wmiexplorer
-UpgradeBehavior: install
-Commands:
-- wmiexplorer
+Dependencies:
+  ExternalDependencies:
+  - Microsoft.DotNet.DesktopRuntime.8
 ReleaseDate: 2021-12-06
 Installers:
 - Architecture: x86
