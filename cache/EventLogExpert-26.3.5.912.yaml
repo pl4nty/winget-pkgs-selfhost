@@ -41,4 +41,7 @@ ReleaseNotes: |-
   - eb8927e Added missing categories to basic filter
   This list of changes was auto generated.
 ReleaseNotesUrl: https://github.com/microsoft/EventLogExpert/releases/tag/v26.3.5.912
+Documentations:
+  - DocumentLabel: Wiki
+    DocumentUrl: https://github.com/microsoft/EventLogExpert/wiki
 DefaultLocale: en-US
