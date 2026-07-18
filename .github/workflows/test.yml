@@ -1,0 +1,89 @@
+name: Test
+
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: Package IDs to test (space-separated)
+        required: false
+        type: string
+
+permissions: {}
+
+defaults:
+  run:
+    shell: bash -euo pipefail {0}
+
+jobs:
+  detect-changes:
+    name: Detect Changed Shards
+    if: ${{ !inputs.packages }}
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
+    concurrency:
+      group: test-detect-changes-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    outputs:
+      any_changed: ${{ steps.changed-files.outputs.any_changed }}
+      changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
+        with:
+          files: shards/**
+          files_ignore: |
+            shards/**/*.disabled
+            shards/auto-remove.json
+          json: true
+          escape_json: false
+
+  test:
+    name: Test
+    needs: detect-changes
+    if: always() && (needs.detect-changes.outputs.any_changed == 'true' || inputs.packages)
+    runs-on: ubuntu-26.04-arm
+    timeout-minutes: 10
+    concurrency:
+      group: test-job-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Environment
+        uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
+        with:
+          version: 2026.7.6
+          install_args: bun
+
+      - name: Install Dependencies
+        run: bun ci --production
+
+      - name: Test Packages
+        run: |
+          if [ -n "$PACKAGES" ]; then
+            PACKAGE_IDS="$PACKAGES"
+          else
+            PACKAGE_IDS=""
+            while IFS= read -r file; do
+              PACKAGE_IDS+="$(basename "${file%.*}") "
+            done < <(jq -r '.[]' <<< "$CHANGED_FILES")
+            PACKAGE_IDS="${PACKAGE_IDS% }"
+          fi
+
+          bun test:shard "$PACKAGE_IDS" --dry-run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          KOMAC_GITHUB_OWNER: ${{ github.repository_owner }}
+          KOMAC_GITHUB_REPO: ${{ github.event.repository.name }}
+          CHANGED_FILES: ${{ needs.detect-changes.outputs.changed_files }}
+          PACKAGES: ${{ inputs.packages }}

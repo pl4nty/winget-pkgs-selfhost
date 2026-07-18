@@ -1,0 +1,221 @@
+name: publish
+
+# Storage backend is selected with the STORAGE_BACKEND repository variable:
+#   github (default) - commit the cache to this repository, served via raw.githubusercontent.com
+#   azure-blob       - upload to Azure Blob Storage (AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_CONTAINER)
+#   s3               - sync to an S3-compatible bucket with rclone (S3_BUCKET, S3_ENDPOINT, S3_PROVIDER)
+# Signing backend is selected with the SIGNING_BACKEND repository variable:
+#   trusted-signing  - Azure Trusted Signing (AZURE_SIGNING_ENDPOINT, AZURE_SIGNING_ACCOUNT, AZURE_SIGNING_PROFILE)
+#   azuresigntool    - AzureSignTool with an Azure Key Vault certificate (KEY_VAULT_URL, KEY_VAULT_CERT)
+# See the README for the full setup guide.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/publish.yml'
+      - 'index/**'
+      - 'manifests/**'
+      - 'fonts/**'
+  workflow_dispatch:
+  workflow_call:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  merge:
+    name: Merge Manifests
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Merge manifests
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ./.github/workflows/merge.ps1
+
+      - parallel:
+          - name: Upload merged manifests
+            uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+            with:
+              name: merged-manifests
+              path: ${{ runner.temp }}/manifests
+              include-hidden-files: true
+              if-no-files-found: error
+
+          - name: Upload index
+            uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+            with:
+              name: index
+              path: index
+              if-no-files-found: error
+
+  publish:
+    name: Publish Manifests
+    needs: merge
+    runs-on: windows-2025
+    permissions:
+      id-token: write
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout mise configuration
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            mise.lock
+            mise.toml
+          sparse-checkout-cone-mode: false
+
+      - parallel:
+          - name: Download index
+            uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+            with:
+              name: index
+              path: index
+
+          - name: Download merged manifests
+            uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+            with:
+              name: merged-manifests
+              path: ${{ runner.temp }}/manifests
+
+          - name: Download IndexCreationTool
+            shell: bash
+            run: |
+              gh release download --repo "$INDEX_TOOL_REPO" --pattern AppInstallerCLIE2ETests.zip
+              7z x ./AppInstallerCLIE2ETests.zip -o"./index" -y
+            env:
+              GITHUB_TOKEN: ${{ github.token }}
+              INDEX_TOOL_REPO: ${{ vars.INDEX_TOOL_REPO || 'pl4nty/winget-pkgs-selfhost' }}
+
+          - name: Setup rclone
+            if: vars.STORAGE_BACKEND == 's3'
+            uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
+            with:
+              version: 2026.7.6
+              install_args: rclone
+
+      - parallel:
+          - name: Setup and run IndexCreationTool
+            working-directory: index
+            run: |
+              $version = Get-Date -Format yyyy.M.d.hm
+              (Get-Content -Path AppxManifest.xml) -replace "<VERSION>", $version | Set-Content -Path AppxManifest.xml
+              .\AppInstallerCLIE2ETests\IndexCreationTool.exe -f source.json
+            env:
+              TEMP: ${{ runner.temp }}
+
+          - uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3.0.0
+            if: github.ref == 'refs/heads/main' && (vars.SIGNING_BACKEND != '' || vars.STORAGE_BACKEND == 'azure-blob')
+            with:
+              client-id: ${{ vars.AZURE_CLIENT_ID }}
+              tenant-id: ${{ vars.AZURE_TENANT_ID }}
+              subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+              allow-no-subscriptions: true
+
+          - name: Install AzureSignTool
+            if: vars.SIGNING_BACKEND == 'azuresigntool'
+            run: dotnet tool install --global AzureSignTool
+
+      - name: Sign source package (Trusted Signing)
+        if: github.ref == 'refs/heads/main' && vars.SIGNING_BACKEND == 'trusted-signing'
+        uses: azure/trusted-signing-action@v0 # zizmor: ignore[unpinned-uses]
+        with:
+          endpoint: ${{ vars.AZURE_SIGNING_ENDPOINT }}
+          trusted-signing-account-name: ${{ vars.AZURE_SIGNING_ACCOUNT }}
+          certificate-profile-name: ${{ vars.AZURE_SIGNING_PROFILE }}
+          files-folder: index/cache
+          files-folder-filter: msix
+          files-folder-recurse: true
+          exclude-environment-credential: true
+          exclude-workload-identity-credential: true
+          exclude-managed-identity-credential: true
+          exclude-shared-token-cache-credential: true
+          exclude-visual-studio-credential: true
+          exclude-visual-studio-code-credential: true
+          exclude-azure-cli-credential: false
+          exclude-azure-powershell-credential: true
+          exclude-azure-developer-cli-credential: true
+          exclude-interactive-browser-credential: true
+
+      - name: Sign source package (AzureSignTool)
+        working-directory: index
+        if: github.ref == 'refs/heads/main' && vars.SIGNING_BACKEND == 'azuresigntool'
+        run: |
+          $msixFiles = Get-ChildItem cache -Recurse -Filter *.msix | Select-Object -ExpandProperty FullName
+          AzureSignTool sign -kvu $env:KEY_VAULT_URL -kvc $env:KEY_VAULT_CERT -kvm -tr http://timestamp.acs.microsoft.com -td sha256 -fd sha256 $msixFiles
+        env:
+          KEY_VAULT_URL: ${{ vars.KEY_VAULT_URL }}
+          KEY_VAULT_CERT: ${{ vars.KEY_VAULT_CERT }}
+
+      - name: Publish source (Azure Blob Storage)
+        working-directory: index
+        if: github.ref == 'refs/heads/main' && vars.STORAGE_BACKEND == 'azure-blob'
+        run: |
+          az storage blob upload-batch `
+            --source cache `
+            --destination $env:AZURE_STORAGE_CONTAINER `
+            --account-name $env:AZURE_STORAGE_ACCOUNT `
+            --auth-mode login `
+            --overwrite
+        env:
+          AZURE_STORAGE_ACCOUNT: ${{ vars.AZURE_STORAGE_ACCOUNT }}
+          AZURE_STORAGE_CONTAINER: ${{ vars.AZURE_STORAGE_CONTAINER || 'cache' }}
+
+      - name: Publish source (S3)
+        working-directory: index
+        if: vars.STORAGE_BACKEND == 's3'
+        run: rclone sync cache remote:$env:S3_BUCKET/cache --checksum --fast-list ${{ github.ref != 'refs/heads/main' && '--dry-run' || '' }}
+        env:
+          S3_BUCKET: ${{ vars.S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          RCLONE_CONFIG_REMOTE_TYPE: s3
+          RCLONE_CONFIG_REMOTE_PROVIDER: ${{ vars.S3_PROVIDER || 'AWS' }}
+          RCLONE_CONFIG_REMOTE_ENV_AUTH: 'true'
+          RCLONE_CONFIG_REMOTE_ENDPOINT: ${{ vars.S3_ENDPOINT }}
+
+      - name: Upload cache
+        if: vars.STORAGE_BACKEND == '' || vars.STORAGE_BACKEND == 'github'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: cache
+          path: index/cache
+          if-no-files-found: error
+
+  commit:
+    name: Publish source (GitHub)
+    needs: publish
+    if: github.ref == 'refs/heads/main' && (vars.STORAGE_BACKEND == '' || vars.STORAGE_BACKEND == 'github')
+    runs-on: ubuntu-slim
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 # zizmor: ignore[artipacked] credentials are required to push the cache
+
+      - name: Replace cache
+        run: rm -rf cache
+
+      - name: Download cache
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: cache
+          path: cache
+
+      - uses: EndBug/add-and-commit@v9.1.4 # zizmor: ignore[unpinned-uses]
+        with:
+          default_author: github_actions
+          message: 'chore: regenerate cache'
+          pull: '--rebase --autostash'

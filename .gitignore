@@ -1,0 +1,5 @@
+/node_modules
+/.env
+/index/cache
+/index/AppInstallerCLIE2ETests
+/AppInstallerCLIE2ETests.zip

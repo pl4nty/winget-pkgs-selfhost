@@ -1,2 +1,4 @@
-# prevent git from modifying line endings on checkout and causing hash mismatch
-manifests/*.yaml binary
+# prevent git from modifying line endings on checkout and causing hash mismatches
+manifests/** -text
+fonts/** -text
+cache/** -text
