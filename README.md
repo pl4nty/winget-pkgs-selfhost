@@ -122,26 +122,32 @@ winget source add --name selfhost --type Microsoft.PreIndexed.Package --arg http
 
 ### Manifests
 
-Add standard [WinGet manifests](https://learn.microsoft.com/en-us/windows/package-manager/package/manifest) under `manifests/<first letter>/<Publisher>/<Package>/<version>/`, the same layout as [winget-pkgs](https://github.com/microsoft/winget-pkgs). [Komac](https://github.com/russellbanks/Komac) or [wingetcreate](https://github.com/microsoft/winget-create) can generate them for you. Font packages can live in an optional `fonts/` directory with the same layout.
+Add standard [WinGet manifests](https://learn.microsoft.com/en-us/windows/package-manager/package/manifest) under `manifests/<first letter>/<Publisher>/<Package>/<version>/`, the same layout as [winget-pkgs](https://github.com/microsoft/winget-pkgs). Font packages can live in an optional `fonts/` directory with the same layout.
+
+The easiest way to author or update a manifest is the Anthelion fork of Komac, which can target your own repository instead of `microsoft/winget-pkgs`. Download a binary for your platform from [unpn-org/Komac releases](https://github.com/unpn-org/Komac/releases), then point it at your repo with these environment variables (the same ones the update workflow uses):
+
+| Variable             | Value                                                   |
+| -------------------- | ------------------------------------------------------- |
+| `GITHUB_TOKEN`       | A token with `contents` and `pull-requests` write scope |
+| `KOMAC_GITHUB_OWNER` | Target repository owner (your account, not `microsoft`) |
+| `KOMAC_GITHUB_REPO`  | Target repository name                                  |
+| `KOMAC_FORK_OWNER`   | Where Komac pushes its branch (usually the same owner)  |
+
+```sh
+# add a new package
+komac new Publisher.Package
+
+# update an existing package to a new version
+komac update Publisher.Package --version 1.2.3 --urls https://example.com/setup-1.2.3.exe
+```
+
+Komac downloads the installers, fills in the hashes and metadata, and opens a pull request against `$KOMAC_GITHUB_OWNER/$KOMAC_GITHUB_REPO` instead of the default `microsoft/winget-pkgs`. Add `--dry-run --output <dir>` to write the manifests locally without opening a pull request. [wingetcreate](https://github.com/microsoft/winget-create) also works if you prefer to author manifests by hand.
 
 On merge to `main`, the [publish workflow](./.github/workflows/publish.yml) merges the manifests, resolves [winget-pkgs](https://github.com/microsoft/winget-pkgs) dependencies, builds the preindexed source package with `IndexCreationTool`, signs it, and uploads it to your storage backend.
 
 ### Automated updates (Anthelion)
 
-Add a shard at `shards/json/<PackageIdentifier>.json` describing how to detect new versions. The [update workflow](./.github/workflows/update-packages.yml) runs Anthelion on a schedule, and it opens a pull request via Komac when a new version is found. For example, a package released on GitHub:
-
-```json
-{
-	"$schema": "https://anthelion.unownplain.dev/schema.json",
-	"strategy": "github-release",
-	"github": { "owner": "rustdesk", "repo": "rustdesk" },
-	"urls": [
-		"https://github.com/rustdesk/rustdesk/releases/download/{version}/rustdesk-{version}-x86_64.exe"
-	]
-}
-```
-
-Other strategies include `json` (poll a JSON endpoint) and `page-match` (regex over a web page) - see the [schema](https://anthelion.unownplain.dev/schema.json) and the shards in [winget-extras](https://github.com/pl4nty/winget-extras/tree/main/shards/json) for examples. Suffix a shard filename with `.disabled` to skip it.
+Add a shard at `shards/json/<PackageIdentifier>.json` describing how to detect new versions, and the [update workflow](./.github/workflows/update-packages.yml) runs [Anthelion](https://github.com/UnownPlain/anthelion) on a schedule to open a pull request via Komac when a new version is found. See Anthelion's [CONTRIBUTING.md](https://github.com/UnownPlain/anthelion/blob/main/CONTRIBUTING.md) for the shard format, the available strategies, and how to test a shard locally with `bun test:shard <PackageIdentifier> --dry-run`. Suffix a shard filename with `.disabled` to skip it.
 
 Anthelion authenticates as a GitHub App so its pull requests trigger CI:
 
