@@ -81,7 +81,7 @@ jobs:
       - name: Upload to blob storage
         run: az storage blob upload-batch --source cache --destination cache --account-name wingetselfhost --auth-mode login --overwrite
 
-      - uses: EndBug/add-and-commit@v9.1.4
+      - uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
         with:
           default_author: github_actions
           message: "chore: regenerate cache"
