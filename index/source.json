@@ -1,0 +1,7 @@
+{
+  "AppxManifest": "AppxManifest.xml",
+  "WorkingDirectory": "cache",
+  "LocalManifests": [
+    "%TEMP%/manifests"
+  ]
+}

@@ -1,0 +1,195 @@
+name: validate
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_id:
+        description: 'Package ID (e.g., Microsoft.AzIPLogViewer)'
+        required: true
+        type: string
+      version:
+        description: 'Package version (e.g., 1.0)'
+        required: true
+        type: string
+  pull_request:
+    paths:
+      - 'manifests/**'
+      - 'fonts/**'
+  # schedule:
+  #   # Daily run on main to populate the Attack Surface Analyzer baseline cache
+  #   - cron: '0 0 * * *'
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    name: Detect
+    runs-on: ubuntu-slim
+    outputs:
+      installers: ${{ steps.matrix.outputs.installers }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Get changed manifests
+        id: changed
+        if: github.event_name == 'pull_request'
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
+        with:
+          files: |
+            manifests/**/*.yaml
+            fonts/**/*.yaml
+          dir_names: true
+          json: true
+          escape_json: false
+
+      - name: Build matrix
+        id: matrix
+        shell: pwsh
+        env:
+          PACKAGE_ID: ${{ inputs.package_id || 'Microsoft.ConfigMgr.SupportCenter' }}
+          VERSION: ${{ inputs.version || '5.2509.1065.1000' }}
+          CHANGED: ${{ steps.changed.outputs.all_changed_files }}
+        run: |
+          Install-Module powershell-yaml -Force
+          $packages = @(if ($env:GITHUB_EVENT_NAME -ne 'pull_request') {
+            $relativePath = "$($env:PACKAGE_ID.Substring(0,1).ToLower())/$($env:PACKAGE_ID -replace '\.', '/')/$($env:VERSION)"
+            if (Test-Path "fonts/$relativePath") { "fonts/$relativePath" } else { "manifests/$relativePath" }
+          } else {
+            $env:CHANGED | ConvertFrom-Json | Select-Object -Unique
+          })
+
+          $installers = $packages | ForEach-Object {
+            $manifestPath = Get-ChildItem $_ -Filter *.installer.yaml
+            $manifest = $manifestPath | Get-Content | ConvertFrom-Yaml
+            $manifest.Installers | ForEach-Object {
+              @{
+                path = $manifestPath | Resolve-Path -Relative;
+                arch = $_.Architecture;
+                scope = $_.Scope ?? $manifest.Scope;
+                type = $_.InstallerType ?? $manifest.InstallerType
+              }
+            }
+          }
+          "installers=$($installers | ConvertTo-Json -Compress -Depth 5 -AsArray)" >> $env:GITHUB_OUTPUT
+
+  validate:
+    name: Installation Validation
+    needs: detect
+    if: needs.detect.outputs.installers != '[]' && needs.detect.outputs.installers != ''
+    runs-on: ${{ matrix.installer.arch == 'arm64' && 'windows-11-arm' || 'windows-latest' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        installer: ${{ fromJSON(needs.detect.outputs.installers) }}
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            .github/workflows/validate.ps1
+            .github/workflows/analyses.json
+            ${{ matrix.installer.path }}
+
+      - name: Install Attack Surface Analyzer
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download latest --repo pl4nty/AttackSurfaceAnalyzer --pattern '*.nupkg' --dir asa-pkg
+          $cli = Get-ChildItem asa-pkg/Microsoft.CST.AttackSurfaceAnalyzer.CLI.*.nupkg | Select-Object -First 1
+          $version = $cli.BaseName -replace '^Microsoft\.CST\.AttackSurfaceAnalyzer\.CLI\.', ''
+          dotnet tool install --global --add-source asa-pkg Microsoft.CST.AttackSurfaceAnalyzer.CLI --version $version
+          "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
+
+      - name: Get image version
+        id: image-version
+        run: '"version=$env:ImageVersion" >> $env:GITHUB_OUTPUT'
+
+      # - name: Restore Attack Surface Analyzer database
+      #   uses: actions/cache@v5
+      #   with:
+      #     path: ${{ github.workspace }}/asa.sqlite*
+      #     key: asa-baseline-${{ runner.os }}-${{ runner.arch }}-${{ steps.image-version.outputs.version }}
+
+      - uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          egress-policy: audit
+
+      - name: Validate
+        id: validate
+        run: |
+          ./.github/workflows/validate.ps1 `
+            -ManifestPath $env:MANIFEST_PATH `
+            -Arch $env:ARCH `
+            -Scope $env:SCOPE `
+            -InstallerType $env:INSTALLER_TYPE
+        env:
+          MANIFEST_PATH: ${{ matrix.installer.path }}
+          ARCH: ${{ matrix.installer.arch }}
+          SCOPE: ${{ matrix.installer.scope }}
+          INSTALLER_TYPE: ${{ matrix.installer.type }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Print logs
+        if: always()
+        working-directory: ${{ runner.temp }}\artifacts
+        run: |
+          Get-ChildItem "$env:STEPS_VALIDATE_OUTPUTS_ARTIFACT_NAME-*.log", "$env:STEPS_VALIDATE_OUTPUTS_ARTIFACT_NAME-installer.log" -Recurse -File | select -Unique | ForEach-Object {
+            Write-Host "::group::$($_.Name)"
+            Get-Content $_
+            Write-Host "::endgroup::"
+          }
+        env:
+          STEPS_VALIDATE_OUTPUTS_ARTIFACT_NAME: ${{ steps.validate.outputs.artifact_name }}
+
+      - name: Upload screenshot
+        id: screenshot
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          path: ${{ runner.temp }}\artifacts\${{ steps.validate.outputs.artifact_name }}.png
+          if-no-files-found: ignore
+          archive: false
+
+      - name: Upload SARIF
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ steps.validate.outputs.artifact_name }}-asa
+          path: ${{ runner.temp }}\artifacts\${{ steps.validate.outputs.artifact_name }}-asa.sarif
+          if-no-files-found: ignore
+
+      - name: Add validation logs to job summary
+        if: always()
+        env:
+          ARTIFACT_NAME: ${{ steps.validate.outputs.artifact_name }}
+          SCREENSHOT_URL: ${{ steps.screenshot.outputs.artifact-url }}
+        run: |
+          @(
+            "## Validation logs: $env:ARTIFACT_NAME",
+            ""
+          ) >> $env:GITHUB_STEP_SUMMARY
+
+          if ($env:SCREENSHOT_URL) {
+            "[Screenshot artifact]($env:SCREENSHOT_URL)" >> $env:GITHUB_STEP_SUMMARY
+            "" >> $env:GITHUB_STEP_SUMMARY
+          }
+
+          Get-ChildItem "$env:RUNNER_TEMP\artifacts\$env:ARTIFACT_NAME-*.log", "$env:RUNNER_TEMP\artifacts\$env:ARTIFACT_NAME-installer.log" -Recurse -File -ErrorAction SilentlyContinue | select -Unique | ForEach-Object {
+            "<details><summary>$($_.Name)</summary>" >> $env:GITHUB_STEP_SUMMARY
+            "" >> $env:GITHUB_STEP_SUMMARY
+            '```text' >> $env:GITHUB_STEP_SUMMARY
+            Get-Content $_ >> $env:GITHUB_STEP_SUMMARY
+            '```' >> $env:GITHUB_STEP_SUMMARY
+            "" >> $env:GITHUB_STEP_SUMMARY
+            "</details>" >> $env:GITHUB_STEP_SUMMARY
+            "" >> $env:GITHUB_STEP_SUMMARY
+          }

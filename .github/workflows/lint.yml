@@ -1,0 +1,40 @@
+name: Lint Project
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  lint-project:
+    name: Lint Project
+    runs-on: ubuntu-26.04-arm
+    timeout-minutes: 5
+    concurrency:
+      group: lint-project-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Environment
+        uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
+        with:
+          version: 2026.7.6
+          install_args: bun
+
+      - name: Install Dependencies
+        run: bun ci
+
+      - parallel:
+          - name: Check Formatting
+            run: bun fmt --check
+
+          - name: Lint & Type check
+            run: bun lint --deny-warnings
+
+          - name: Check Manifests
+            run: bun manifests:check

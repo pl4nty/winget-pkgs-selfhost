@@ -1,0 +1,57 @@
+name: Lint Actions
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  lint-actions:
+    name: Lint Actions
+    runs-on: ubuntu-26.04-arm
+    timeout-minutes: 5
+    permissions:
+      security-events: write # Required for upload-sarif to upload SARIF files.
+    concurrency:
+      group: lint-actions-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Environment
+        uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
+        with:
+          version: 2026.7.6
+          install_args: zizmor actionlint shellcheck
+
+      - parallel:
+          - name: Run zizmor 🌈
+            run: |
+              zizmor . --pedantic --color=always --format=sarif > zizmor.sarif
+            env:
+              ZIZMOR_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          - name: Run actionlint
+            continue-on-error: true
+            run: |
+              actionlint -format "$(cat .github/actionlint-sarif.txt)" -color \
+                -ignore 'label "ubuntu-26\.04-arm" is unknown' \
+                -ignore 'step must run script with "run" section or run action with "uses" section' \
+                > actionlint.sarif
+
+      - parallel:
+          - name: Upload zizmor SARIF file
+            uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
+            with:
+              sarif_file: zizmor.sarif
+              category: zizmor
+
+          - name: Upload actionlint SARIF file
+            uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
+            with:
+              sarif_file: actionlint.sarif
+              category: actionlint
