@@ -1,21 +1,21 @@
 # winget-pkgs-selfhost
 
-A template repository for hosting your own WinGet source — the same automation that powers [pl4nty/winget-extras](https://github.com/pl4nty/winget-extras).
+A template repository for hosting your own WinGet source - the same automation that powers [pl4nty/winget-extras](https://github.com/pl4nty/winget-extras).
 
 ## Features
 
-- **Automated package updates** with [Anthelion](https://github.com/UnownPlain/anthelion-external) and [Komac](https://github.com/russellbanks/Komac) — declare an update strategy per package in `shards/`, and new versions are detected and submitted as pull requests automatically
-- **Automated validation** — changed manifests are installed on GitHub-hosted Windows runners (x64 and arm64), with [Attack Surface Analyzer](https://github.com/microsoft/AttackSurfaceAnalyzer) reports, screenshots, and installer logs
-- **Preindexed source builds** — manifests are merged and indexed into a signed MSIX source package that the WinGet client consumes directly, including cross-source dependency resolution from [winget-pkgs](https://github.com/microsoft/winget-pkgs)
-- **Pluggable storage backends** — serve the source from GitHub, Azure Blob Storage, or any S3-compatible bucket (AWS S3, Cloudflare R2, MinIO...)
-- **Pluggable signing backends** — sign the source package with Azure Trusted Signing or an Azure Key Vault certificate via AzureSignTool
-- **Linting** — manifest hygiene checks, plus zizmor/actionlint/shellcheck for the workflows themselves
+- **Automated package updates** with [Anthelion](https://github.com/UnownPlain/anthelion-external) and [Komac](https://github.com/russellbanks/Komac) - declare an update strategy per package in `shards/`, and new versions are detected and submitted as pull requests automatically
+- **Automated validation** - changed manifests are installed on GitHub-hosted Windows runners (x64 and arm64), with [Attack Surface Analyzer](https://github.com/microsoft/AttackSurfaceAnalyzer) reports, screenshots, and installer logs
+- **Preindexed source builds** - manifests are merged and indexed into a signed MSIX source package that the WinGet client consumes directly, including cross-source dependency resolution from [winget-pkgs](https://github.com/microsoft/winget-pkgs)
+- **Pluggable storage backends** - serve the source from GitHub, Azure Blob Storage, or any S3-compatible bucket (AWS S3, Cloudflare R2, MinIO...)
+- **Pluggable signing backends** - sign the source package with Azure Trusted Signing or an Azure Key Vault certificate via AzureSignTool
+- **Linting** - manifest hygiene checks, plus zizmor/actionlint/shellcheck for the workflows themselves
 
 ## Getting started
 
 1. [Create a repository from this template](https://github.com/new?template_name=winget-pkgs-selfhost&template_owner=pl4nty)
 2. Update the `Identity`, `Properties`, and display names in [`index/AppxManifest.xml`](./index/AppxManifest.xml). The `Publisher` must exactly match the subject of your signing certificate. Optionally replace the logos in [`index/Assets`](./index/Assets)
-3. Configure a [signing backend](#signing-backends) — WinGet requires preindexed sources to be signed by a certificate the client trusts
+3. Configure a [signing backend](#signing-backends) - WinGet requires preindexed sources to be signed by a certificate the client trusts
 4. Configure a [storage backend](#storage-backends) (defaults to GitHub, no setup required)
 5. [Add packages](#adding-packages)
 6. Add the source on your machines:
@@ -26,7 +26,7 @@ winget source add --name selfhost --type Microsoft.PreIndexed.Package --arg <cac
 
 ## Signing backends
 
-Both backends authenticate to Azure with OIDC — no stored credentials:
+Both backends authenticate to Azure with OIDC - no stored credentials:
 
 1. [Create an app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
 2. [Add a federated credential for the repository](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp#github-actions) (entity type `Branch`, branch `main`)
@@ -76,7 +76,7 @@ No configuration needed. The generated `cache` directory is committed back to th
 winget source add --name selfhost --type Microsoft.PreIndexed.Package --arg https://github.com/OWNER/REPO/raw/main/cache
 ```
 
-Best for small sources — every rebuild adds the source package to the repository's history, and GitHub raw serving isn't a CDN.
+Best for small sources - every rebuild adds the source package to the repository's history, and GitHub raw serving isn't a CDN.
 
 ### Azure Blob Storage
 
@@ -141,7 +141,7 @@ Add a shard at `shards/json/<PackageIdentifier>.json` describing how to detect n
 }
 ```
 
-Other strategies include `json` (poll a JSON endpoint) and `page-match` (regex over a web page) — see the [schema](https://anthelion.unownplain.dev/schema.json) and the shards in [winget-extras](https://github.com/pl4nty/winget-extras/tree/main/shards/json) for examples. Suffix a shard filename with `.disabled` to skip it.
+Other strategies include `json` (poll a JSON endpoint) and `page-match` (regex over a web page) - see the [schema](https://anthelion.unownplain.dev/schema.json) and the shards in [winget-extras](https://github.com/pl4nty/winget-extras/tree/main/shards/json) for examples. Suffix a shard filename with `.disabled` to skip it.
 
 Anthelion authenticates as a GitHub App so its pull requests trigger CI:
 
