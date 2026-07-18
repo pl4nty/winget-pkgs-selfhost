@@ -64,7 +64,7 @@ jobs:
     needs: merge
     runs-on: windows-2025
     permissions:
-      id-token: write
+      id-token: write # OIDC login to Azure for signing and storage backends
     defaults:
       run:
         shell: pwsh
@@ -177,8 +177,9 @@ jobs:
       - name: Publish source (S3)
         working-directory: index
         if: vars.STORAGE_BACKEND == 's3'
-        run: rclone sync cache remote:$env:S3_BUCKET/cache --checksum --fast-list ${{ github.ref != 'refs/heads/main' && '--dry-run' || '' }}
+        run: rclone sync cache remote:$env:S3_BUCKET/cache --checksum --fast-list $env:DRY_RUN
         env:
+          DRY_RUN: ${{ github.ref != 'refs/heads/main' && '--dry-run' || '' }}
           S3_BUCKET: ${{ vars.S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -201,9 +202,11 @@ jobs:
     if: github.ref == 'refs/heads/main' && (vars.STORAGE_BACKEND == '' || vars.STORAGE_BACKEND == 'github')
     runs-on: ubuntu-slim
     permissions:
-      contents: write
+      contents: write # push the regenerated cache back to the repository
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 # zizmor: ignore[artipacked] credentials are required to push the cache
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: true # zizmor: ignore[artipacked] credentials are required to push the cache
 
       - name: Replace cache
         run: rm -rf cache
@@ -214,8 +217,15 @@ jobs:
           name: cache
           path: cache
 
-      - uses: EndBug/add-and-commit@v9.1.4 # zizmor: ignore[unpinned-uses]
-        with:
-          default_author: github_actions
-          message: 'chore: regenerate cache'
-          pull: '--rebase --autostash'
+      - name: Commit and push cache
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --all cache
+          if git diff --cached --quiet; then
+            echo 'Cache unchanged, nothing to commit'
+            exit 0
+          fi
+          git commit -m 'chore: regenerate cache'
+          git pull --rebase --autostash origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"

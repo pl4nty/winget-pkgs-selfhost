@@ -81,6 +81,7 @@ jobs:
   validate:
     name: Installation Validation
     needs: detect
+    if: needs.detect.outputs.installers != '[]' && needs.detect.outputs.installers != ''
     runs-on: ${{ matrix.installer.arch == 'arm64' && 'windows-11-arm' || 'windows-latest' }}
     strategy:
       fail-fast: false

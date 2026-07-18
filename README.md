@@ -32,10 +32,10 @@ Both backends authenticate to Azure with OIDC — no stored credentials:
 2. [Add a federated credential for the repository](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp#github-actions) (entity type `Branch`, branch `main`)
 3. [Create these repository variables](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository):
 
-| Variable | Value |
-| -------- | ----- |
-| `AZURE_TENANT_ID` | App registration tenant ID |
-| `AZURE_CLIENT_ID` | App registration client ID |
+| Variable                | Value                                                |
+| ----------------------- | ---------------------------------------------------- |
+| `AZURE_TENANT_ID`       | App registration tenant ID                           |
+| `AZURE_CLIENT_ID`       | App registration client ID                           |
 | `AZURE_SUBSCRIPTION_ID` | Subscription ID (only needed for Azure Blob Storage) |
 
 ### Azure Trusted Signing
@@ -44,12 +44,12 @@ Both backends authenticate to Azure with OIDC — no stored credentials:
 2. [Assign Trusted Signing Certificate Profile Signer to the app registration](https://learn.microsoft.com/en-us/azure/trusted-signing/tutorial-assign-roles)
 3. Create these repository variables:
 
-| Variable | Value |
-| -------- | ----- |
-| `SIGNING_BACKEND` | `trusted-signing` |
+| Variable                 | Value                                                               |
+| ------------------------ | ------------------------------------------------------------------- |
+| `SIGNING_BACKEND`        | `trusted-signing`                                                   |
 | `AZURE_SIGNING_ENDPOINT` | Trusted Signing endpoint, like `https://eus.codesigning.azure.net/` |
-| `AZURE_SIGNING_ACCOUNT` | Trusted Signing account name |
-| `AZURE_SIGNING_PROFILE` | Certificate profile name |
+| `AZURE_SIGNING_ACCOUNT`  | Trusted Signing account name                                        |
+| `AZURE_SIGNING_PROFILE`  | Certificate profile name                                            |
 
 ### AzureSignTool (Azure Key Vault)
 
@@ -57,11 +57,11 @@ Both backends authenticate to Azure with OIDC — no stored credentials:
 2. Assign the app registration the `Key Vault Crypto User` and `Key Vault Certificate User` roles (or equivalent access policies) on the vault
 3. Create these repository variables:
 
-| Variable | Value |
-| -------- | ----- |
-| `SIGNING_BACKEND` | `azuresigntool` |
-| `KEY_VAULT_URL` | Key Vault URL, like `https://myvault.vault.azure.net/` |
-| `KEY_VAULT_CERT` | Certificate name in the vault |
+| Variable          | Value                                                  |
+| ----------------- | ------------------------------------------------------ |
+| `SIGNING_BACKEND` | `azuresigntool`                                        |
+| `KEY_VAULT_URL`   | Key Vault URL, like `https://myvault.vault.azure.net/` |
+| `KEY_VAULT_CERT`  | Certificate name in the vault                          |
 
 > [!NOTE]
 > If the certificate isn't from a public CA (e.g. self-signed), it must be deployed to the `Local Machine\Trusted People` or `Trusted Root Certification Authorities` store on client machines.
@@ -84,12 +84,12 @@ Best for small sources — every rebuild adds the source package to the reposito
 2. Assign the app registration the `Storage Blob Data Contributor` role on the container
 3. Create these repository variables:
 
-| Variable | Value |
-| -------- | ----- |
-| `STORAGE_BACKEND` | `azure-blob` |
-| `AZURE_STORAGE_ACCOUNT` | Storage account name |
-| `AZURE_STORAGE_CONTAINER` | Container name (defaults to `cache`) |
-| `AZURE_SUBSCRIPTION_ID` | Subscription containing the storage account |
+| Variable                  | Value                                       |
+| ------------------------- | ------------------------------------------- |
+| `STORAGE_BACKEND`         | `azure-blob`                                |
+| `AZURE_STORAGE_ACCOUNT`   | Storage account name                        |
+| `AZURE_STORAGE_CONTAINER` | Container name (defaults to `cache`)        |
+| `AZURE_SUBSCRIPTION_ID`   | Subscription containing the storage account |
 
 ```sh
 winget source add --name selfhost --type Microsoft.PreIndexed.Package --arg https://ACCOUNT.blob.core.windows.net/CONTAINER
@@ -102,16 +102,16 @@ The cache is synced with [rclone](https://rclone.org/s3/), so any S3-compatible 
 1. Create a bucket and an access key with write permission
 2. Create these repository variables and secrets:
 
-| Variable | Value |
-| -------- | ----- |
-| `STORAGE_BACKEND` | `s3` |
-| `S3_BUCKET` | Bucket name |
-| `S3_ENDPOINT` | Endpoint URL for non-AWS providers, like `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` |
-| `S3_PROVIDER` | [rclone provider name](https://rclone.org/s3/#providers), like `AWS`, `Cloudflare`, or `Minio` (defaults to `AWS`) |
+| Variable          | Value                                                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `STORAGE_BACKEND` | `s3`                                                                                                               |
+| `S3_BUCKET`       | Bucket name                                                                                                        |
+| `S3_ENDPOINT`     | Endpoint URL for non-AWS providers, like `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`                           |
+| `S3_PROVIDER`     | [rclone provider name](https://rclone.org/s3/#providers), like `AWS`, `Cloudflare`, or `Minio` (defaults to `AWS`) |
 
-| Secret | Value |
-| ------ | ----- |
-| `AWS_ACCESS_KEY_ID` | Access key ID |
+| Secret                  | Value             |
+| ----------------------- | ----------------- |
+| `AWS_ACCESS_KEY_ID`     | Access key ID     |
 | `AWS_SECRET_ACCESS_KEY` | Secret access key |
 
 ```sh

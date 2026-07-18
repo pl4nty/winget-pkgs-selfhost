@@ -1,0 +1,6 @@
+{
+	"$schema": "https://anthelion.unownplain.dev/schema.json",
+	"strategy": "github-release",
+	"github": { "owner": "OWNER", "repo": "REPO" },
+	"urls": ["https://github.com/OWNER/REPO/releases/download/{version}/setup-{version}-x64.exe"]
+}
