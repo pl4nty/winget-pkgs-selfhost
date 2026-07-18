@@ -58,7 +58,7 @@ jobs:
       # https://github.com/michidk/winget-updater/blob/main/action.yml
       - name: Detect latest release
         id: latest_release
-        uses: actions/github-script@v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const [owner, repo] = '${{ matrix.repo }}'.split('/');
