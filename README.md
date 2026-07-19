@@ -1,15 +1,13 @@
 # winget-pkgs-selfhost
 
-A template repository for hosting your own WinGet source - the same automation that powers [pl4nty/winget-extras](https://github.com/pl4nty/winget-extras).
+Host your own WinGet source and keep your apps up-to-date. Based on [winget-extras](https://github.com/pl4nty/winget-extras).
 
 ## Features
 
-- **Automated package updates** with [Anthelion](https://github.com/UnownPlain/anthelion-external) and [Komac](https://github.com/russellbanks/Komac) - declare an update strategy per package in `shards/`, and new versions are detected and submitted as pull requests automatically
-- **Automated validation** - changed manifests are installed on GitHub-hosted Windows runners (x64 and arm64), with [Attack Surface Analyzer](https://github.com/microsoft/AttackSurfaceAnalyzer) reports, screenshots, and installer logs
-- **Preindexed source builds** - manifests are merged and indexed into a signed MSIX source package that the WinGet client consumes directly, including cross-source dependency resolution from [winget-pkgs](https://github.com/microsoft/winget-pkgs)
-- **Pluggable storage backends** - serve the source from GitHub, Azure Blob Storage, or any S3-compatible bucket (AWS S3, Cloudflare R2, MinIO...)
-- **Pluggable signing backends** - sign the source package with Azure Trusted Signing or an Azure Key Vault certificate via AzureSignTool
-- **Linting** - manifest hygiene checks, plus zizmor/actionlint/shellcheck for the workflows themselves
+- Automated package updates, powered by [Anthelion](https://github.com/UnownPlain/anthelion-external) and [Komac](https://github.com/russellbanks/Komac). New versions are submitted as pull requests
+- Automated validation, using GitHub-hosted Windows runners (x64 and arm64) with [Attack Surface Analyzer](https://github.com/microsoft/AttackSurfaceAnalyzer) reports, screenshots, and installer logs
+- Serve the source from GitHub, Azure Blob Storage, or any S3-compatible bucket (AWS S3, Cloudflare R2, MinIO...)
+- Sign the source package with Azure Trusted Signing, or an Azure Key Vault certificate via AzureSignTool
 
 ## Getting started
 
@@ -26,7 +24,7 @@ winget source add --name selfhost --type Microsoft.PreIndexed.Package --arg <cac
 
 ## Signing backends
 
-Both backends authenticate to Azure with OIDC - no stored credentials:
+Both backends authenticate to Azure with OIDC:
 
 1. [Create an app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
 2. [Add a federated credential for the repository](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp#github-actions) (entity type `Branch`, branch `main`)
@@ -64,7 +62,7 @@ Both backends authenticate to Azure with OIDC - no stored credentials:
 | `KEY_VAULT_CERT`  | Certificate name in the vault                          |
 
 > [!NOTE]
-> If the certificate isn't from a public CA (e.g. self-signed), it must be deployed to the `Local Machine\Trusted People` or `Trusted Root Certification Authorities` store on client machines.
+> If the certificate is self-signed, it must be deployed to the `Local Machine\Trusted People` or `Trusted Root Certification Authorities` store on client machines.
 
 ## Storage backends
 
@@ -159,7 +157,7 @@ Anthelion authenticates as a GitHub App so its pull requests trigger CI:
 Changed manifests in pull requests are validated automatically by the [validate workflow](./.github/workflows/validate.yml): each installer is installed on a GitHub-hosted runner matching its architecture, with logs, an Attack Surface Analyzer SARIF report, and a desktop screenshot attached to the job summary. Limitations:
 
 - Interactive installation is only tested if silent installation fails
-- The `arm` architecture (32-bit ARM) is not tested
+- The `arm` architecture (32-bit ARM) is not tested, because arm32 GitHub runners aren't available
 
 You can also validate manually with `SandboxTest` from winget-pkgs:
 
