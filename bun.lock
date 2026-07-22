@@ -4,7 +4,7 @@
   "workspaces": {
     "": {
       "dependencies": {
-        "anthelion": "github:UnownPlain/anthelion-external#1ecc5adc2b449059bea9f36b64042ffa44c94d08",
+        "anthelion": "github:UnownPlain/anthelion-external#fc5452e0bdd0885b60b3e6eafe332f1c3567bc2e",
       },
       "devDependencies": {
         "oxfmt": "0.59.0",
@@ -14,13 +14,13 @@
     },
   },
   "packages": {
-    "@ai-sdk/gateway": ["@ai-sdk/gateway@4.0.15", "", { "dependencies": { "@ai-sdk/provider": "4.0.3", "@ai-sdk/provider-utils": "5.0.7", "@vercel/oidc": "3.2.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-JHvgCU4SR6OdjOI+8rxIF3zhIboFAkQ1vEa+QOIdkK5VyME1ONx8SbgM2YtnSY1DOsCtUyhd+EG876pYpRjopg=="],
+    "@ai-sdk/gateway": ["@ai-sdk/gateway@4.0.22", "", { "dependencies": { "@ai-sdk/provider": "4.0.3", "@ai-sdk/provider-utils": "5.0.10", "@vercel/oidc": "3.2.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-KdXJLa6O25fltJC/Lh8gnB1VaYMdX2mEKIalkohuItS+Ig523XxwK9e/Uuc66AvtrLIf7G51cDg3rDpP9mrxwQ=="],
 
-    "@ai-sdk/groq": ["@ai-sdk/groq@4.0.7", "", { "dependencies": { "@ai-sdk/provider": "4.0.3", "@ai-sdk/provider-utils": "5.0.7" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-7IiUo/qpiX4luJHlpaiNw/EqY0pWvWyIkTi4vyNwwTl7EuB1rk4mUUSKLc4eo3VAowKiCoz6Ry6y0utm1wcmTQ=="],
+    "@ai-sdk/groq": ["@ai-sdk/groq@4.0.11", "", { "dependencies": { "@ai-sdk/provider": "4.0.3", "@ai-sdk/provider-utils": "5.0.10" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-/TL59OiozAQutjm1gr8pdYo8BfnLQIMIxqhjGgvRvtOEy8SI+hJ/WO+0tt3RcmoPaD8GwaqMslXOglNUJdGUcg=="],
 
     "@ai-sdk/provider": ["@ai-sdk/provider@4.0.3", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-e0CpNWJUY7OxAFAnCZkw+ri9QOHWwTs1tXP42782KFGCU07qt8NiXCrCVowyCB5dP2r5/Uls+g2oPd8kOJn9dw=="],
 
-    "@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@5.0.7", "", { "dependencies": { "@ai-sdk/provider": "4.0.3", "@standard-schema/spec": "^1.1.0", "@workflow/serde": "4.1.0", "eventsource-parser": "^3.0.8" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-OSm5/5kdrHa11WIOo5LYgDKnxYWp5aB/wx5EXRHi0jpUGduMDeB6oht9U6p+UNNWIP3F/EqPpV8d7vdP/iRnqg=="],
+    "@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@5.0.10", "", { "dependencies": { "@ai-sdk/provider": "4.0.3", "@standard-schema/spec": "^1.1.0", "@workflow/serde": "4.1.0", "eventsource-parser": "^3.0.8" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-uPyec0+85dwxZYXtb8qe8gCjhjDfxP4LCDo/uRQS/iG+FIgYbHPRhr/ys281udG90bTaE18+5cxWraYaf8oHCw=="],
 
     "@octokit/app": ["@octokit/app@16.1.2", "", { "dependencies": { "@octokit/auth-app": "^8.1.2", "@octokit/auth-unauthenticated": "^7.0.3", "@octokit/core": "^7.0.6", "@octokit/oauth-app": "^8.0.3", "@octokit/plugin-paginate-rest": "^14.0.0", "@octokit/types": "^16.0.0", "@octokit/webhooks": "^14.0.0" } }, "sha512-8j7sEpUYVj18dxvh0KWj6W/l6uAiVRBl1JBDVRqH1VHKAO/G5eRVl4yEoYACjakWers1DjUkcCHyJNQK47JqyQ=="],
 
@@ -180,33 +180,33 @@
 
     "@types/aws-lambda": ["@types/aws-lambda@8.10.162", "", {}, "sha512-Fn658grtLOci1oxi1391vvDWJRKNGWRSqfxRkmN/Iy3c0tQH1USMKEXcPYHLvope+ZgTFocx9FRQJx1muBL6qw=="],
 
-    "@unownplain/anthelion-komac": ["@unownplain/anthelion-komac@0.0.50", "", { "optionalDependencies": { "@unownplain/anthelion-komac-darwin-arm64": "0.0.50", "@unownplain/anthelion-komac-darwin-x64": "0.0.50", "@unownplain/anthelion-komac-linux-arm64-gnu": "0.0.50", "@unownplain/anthelion-komac-linux-arm64-musl": "0.0.50", "@unownplain/anthelion-komac-linux-x64-gnu": "0.0.50", "@unownplain/anthelion-komac-linux-x64-musl": "0.0.50", "@unownplain/anthelion-komac-win32-arm64-msvc": "0.0.50", "@unownplain/anthelion-komac-win32-x64-msvc": "0.0.50" } }, "sha512-24hEoSaew2WFuP7LlKbVzvQkZrjLyy0IDFi6zFghOuZAOTL8Y89SXDLt6zZHDeCmsnAJbmdZyIT5C3/4l63p9w=="],
+    "@unownplain/anthelion-komac": ["@unownplain/anthelion-komac@0.0.51", "", { "optionalDependencies": { "@unownplain/anthelion-komac-darwin-arm64": "0.0.51", "@unownplain/anthelion-komac-darwin-x64": "0.0.51", "@unownplain/anthelion-komac-linux-arm64-gnu": "0.0.51", "@unownplain/anthelion-komac-linux-arm64-musl": "0.0.51", "@unownplain/anthelion-komac-linux-x64-gnu": "0.0.51", "@unownplain/anthelion-komac-linux-x64-musl": "0.0.51", "@unownplain/anthelion-komac-win32-arm64-msvc": "0.0.51", "@unownplain/anthelion-komac-win32-x64-msvc": "0.0.51" } }, "sha512-OH9+XaH1asDmyHOh8PrauRsTmb/XjGcVeN4g0XB/z+z2guemieRWnxsJIVqDYL9e+Y9KbBc9QmC6qK1CKcXejA=="],
 
-    "@unownplain/anthelion-komac-darwin-arm64": ["@unownplain/anthelion-komac-darwin-arm64@0.0.50", "", { "os": "darwin", "cpu": "arm64" }, "sha512-bZif0/+gR5+At+IK8j1hYFlEf/DETzmGBvyiDoycjrBehkJ7z/6w7JoIh4RPkQxFLLLjl9YLsXhZFVpQIBbLlA=="],
+    "@unownplain/anthelion-komac-darwin-arm64": ["@unownplain/anthelion-komac-darwin-arm64@0.0.51", "", { "os": "darwin", "cpu": "arm64" }, "sha512-XPmUU7a4kAswzJM9f+EpqMpv9NQ+49Y44VZ+t3FjC9QfOil7EM78M/ypBpiuB47jZHmnINyPb6nFRMy/hCSLhg=="],
 
-    "@unownplain/anthelion-komac-darwin-x64": ["@unownplain/anthelion-komac-darwin-x64@0.0.50", "", { "os": "darwin", "cpu": "x64" }, "sha512-ogn5wsd2QJOOO08m5oWeoWRbcDDRPI/4aGE+3zTvaz5ASuEB0B3s5XsL1DFr26P8JyfGHQw+USBrRWD11jnjUw=="],
+    "@unownplain/anthelion-komac-darwin-x64": ["@unownplain/anthelion-komac-darwin-x64@0.0.51", "", { "os": "darwin", "cpu": "x64" }, "sha512-raJOZSMal1bGynk/fnSriSANxHj9Z91CXA1qshL9cgyIFDcpagSOKsaPxeT+gJecSC2Q/yyPRBrVeRo6gU2DUA=="],
 
-    "@unownplain/anthelion-komac-linux-arm64-gnu": ["@unownplain/anthelion-komac-linux-arm64-gnu@0.0.50", "", { "os": "linux", "cpu": "arm64" }, "sha512-75IsmaUUeqozVNjHL5KP2DE54Zv59OvRUPJlD4bj3HvZDrThhIkxzBq+VA5L0/PkFS5upS0F8YoVY0Kntk/jHQ=="],
+    "@unownplain/anthelion-komac-linux-arm64-gnu": ["@unownplain/anthelion-komac-linux-arm64-gnu@0.0.51", "", { "os": "linux", "cpu": "arm64" }, "sha512-CJ6nFzg2vEYO3bLqC2ONOzv8g/IXttub7MkArAnZ7t8215W2x74KKV0ZxwKcrSxI3yLcgyw5ckwP5pBIgfBM8Q=="],
 
-    "@unownplain/anthelion-komac-linux-arm64-musl": ["@unownplain/anthelion-komac-linux-arm64-musl@0.0.50", "", { "os": "linux", "cpu": "arm64" }, "sha512-AvC8xcNvZ6+dIRBR74VGwFh8tfv7FXugKuDkxLq+WH7pG/BcWaPYu7J99sEvx91iIT9vmeX6IJPIun74QzxiKg=="],
+    "@unownplain/anthelion-komac-linux-arm64-musl": ["@unownplain/anthelion-komac-linux-arm64-musl@0.0.51", "", { "os": "linux", "cpu": "arm64" }, "sha512-q0FuscgSlHJf61L93iyx2Z+Mu79McvmVqhXaMf8MymtZCCmP+W3DEQux8+ansZsu8dng3MySTiPV4uH0yi4q0w=="],
 
-    "@unownplain/anthelion-komac-linux-x64-gnu": ["@unownplain/anthelion-komac-linux-x64-gnu@0.0.50", "", { "os": "linux", "cpu": "x64" }, "sha512-/ElDsGH45fDmda1+rDI6oi/orUVDoXFjA8DdrV5SNWVtsAenIYC0ylzfYixHGUNKjTERShEY1+dH6YJ1nNMKCg=="],
+    "@unownplain/anthelion-komac-linux-x64-gnu": ["@unownplain/anthelion-komac-linux-x64-gnu@0.0.51", "", { "os": "linux", "cpu": "x64" }, "sha512-vqdVFncygx/Nd5/Iu72Iv9A/rXIha6f6WuT0/d7THZwCtVNDKLNutc5SsRCbr3hgDLOOI8T35nWuwNjkA0KIsA=="],
 
-    "@unownplain/anthelion-komac-linux-x64-musl": ["@unownplain/anthelion-komac-linux-x64-musl@0.0.50", "", { "os": "linux", "cpu": "x64" }, "sha512-470IhRnpv9ICCMr9Inm3pQqPpTyvNbVlJxnBLx6PlXODTfhrbzTSD+/ZaMHSAvv61GbQsdaKeV9gj6naZHcbEg=="],
+    "@unownplain/anthelion-komac-linux-x64-musl": ["@unownplain/anthelion-komac-linux-x64-musl@0.0.51", "", { "os": "linux", "cpu": "x64" }, "sha512-kNhdC94bSzeWH8RR+fzW9aCylu3EZul6aUeRQI7jM2A6s1CgJCBWjY/1Tak0T6M2+JxZV7vaAdaDseIMsx3MuQ=="],
 
-    "@unownplain/anthelion-komac-win32-arm64-msvc": ["@unownplain/anthelion-komac-win32-arm64-msvc@0.0.50", "", { "os": "win32", "cpu": "arm64" }, "sha512-5s0DWBZej+OLnGLMY7V48qSsRkSf7r09Aj1GZTA/hDCig8puydlwO7s09HANoE5mc6kDFbwVdmzQ+zDOTY+m2Q=="],
+    "@unownplain/anthelion-komac-win32-arm64-msvc": ["@unownplain/anthelion-komac-win32-arm64-msvc@0.0.51", "", { "os": "win32", "cpu": "arm64" }, "sha512-rbWOlfRqbM6EaIE0QL31g0zwNN85QZw+t5G2vW0wB+exsYO3XMwoxq1WYDngj6ttkFUPf+ZX4Nyy7aZYKl7q6A=="],
 
-    "@unownplain/anthelion-komac-win32-x64-msvc": ["@unownplain/anthelion-komac-win32-x64-msvc@0.0.50", "", { "os": "win32", "cpu": "x64" }, "sha512-Rjex8lTYa2XYpgNulEvEzROdRX837yVYIT/fNLTe9HDgM5oYsG/n6+huYjdOyLppPlcZu1udoda1jsvA8EWeDQ=="],
+    "@unownplain/anthelion-komac-win32-x64-msvc": ["@unownplain/anthelion-komac-win32-x64-msvc@0.0.51", "", { "os": "win32", "cpu": "x64" }, "sha512-5uAlqxpJmGvx0+71pdpQyD10CidyLHLobytZSZGGfHk/uwOFi/caweOC8lthOxKJI6wKQPUMQCVqjsLa4Xr/BQ=="],
 
     "@vercel/oidc": ["@vercel/oidc@3.2.0", "", {}, "sha512-UycprH3T6n3jH0k44NHMa7pnFHGu/N05MjojYr+Mc6I7obkoLIJujSWwin1pCvdy/eOxrI/l3uDLQsmcrOb4ug=="],
 
     "@workflow/serde": ["@workflow/serde@4.1.0", "", {}, "sha512-pav4F2BoirECWR7Nf1TKt+2eETcBj7jj4cBefQ8VXQCA6NPkaKeLfj/zMgi+3zYV5ZIBT4GuUiphsj0/b9hPQQ=="],
 
-    "ai": ["ai@7.0.19", "", { "dependencies": { "@ai-sdk/gateway": "4.0.15", "@ai-sdk/provider": "4.0.3", "@ai-sdk/provider-utils": "5.0.7" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-7kxMNiy6JqCvruCY2qGMNzeqEt9Ey3XqrtYGHWyipDJTXHFN7gOyO1UR2UIXhw112vAUkrO+OJJzemKJD8P3bA=="],
+    "ai": ["ai@7.0.30", "", { "dependencies": { "@ai-sdk/gateway": "4.0.22", "@ai-sdk/provider": "4.0.3", "@ai-sdk/provider-utils": "5.0.10" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-tm0gTAHSWBdDfW4P2mj+LlglGCUQTSA9ktyS2PsPgVhxNO9gYWTSnRAehiJ3h1lYsJBp1Zgbz3RH2lezJXagiw=="],
 
     "ansis": ["ansis@4.3.1", "", {}, "sha512-BJ8/l4R5LRE7hW9WdSuGYrLSHi2ynxeFpDFbH0K/CgNeY/tyhk+vO6TYxXC5r5CpUhNVX310xzPsN/H9lCdfOA=="],
 
-    "anthelion": ["anthelion@github:UnownPlain/anthelion-external#1ecc5ad", { "dependencies": { "@ai-sdk/groq": "4.0.7", "@rcompat/fs": "0.35.1", "@unownplain/anthelion-komac": "0.0.50", "ai": "7.0.19", "ansis": "4.3.1", "es-toolkit": "1.49.0", "ky": "2.0.2", "octokit": "5.0.5", "temporal-polyfill": "1.0.1", "yaml": "2.9.0", "zod": "4.4.3" }, "bin": { "anthelion": "./dist/bin/main.js", "anthelion-test": "./dist/bin/test.js" } }, "UnownPlain-anthelion-external-1ecc5ad", "sha512-uv4z3SSWY0As3jhsTWoe+eD4FT16YwgECWAhgTdv3F/1f9dU2ijuRCGaeA2nxuWgD3VP64P8vQLF1L2AfKwycQ=="],
+    "anthelion": ["anthelion@github:UnownPlain/anthelion-external#fc5452e", { "dependencies": { "@ai-sdk/groq": "4.0.11", "@rcompat/fs": "0.35.1", "@unownplain/anthelion-komac": "0.0.51", "ai": "7.0.30", "ansis": "4.3.1", "es-toolkit": "1.49.0", "ky": "2.0.2", "octokit": "5.0.5", "temporal-polyfill": "1.0.1", "yaml": "2.9.0", "zod": "4.4.3" }, "bin": { "anthelion": "./dist/bin/main.js", "anthelion-test": "./dist/bin/test.js" } }, "UnownPlain-anthelion-external-fc5452e", "sha512-wQv12DUdWuzzaJf1TqsvB+XTMH64o/WchxGn+g0fr8wb7EITlxfp6xzEPJJG+UxwkjuiBWavBYa/sdnN09rnKA=="],
 
     "before-after-hook": ["before-after-hook@4.0.0", "", {}, "sha512-q6tR3RPqIB1pMiTRMFcZwuG5T8vwp+vUvEG0vuI6B+Rikh5BfPp2fQ82c925FOs+b0lcFQ8CFrL+KbilfZFhOQ=="],
 
