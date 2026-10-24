@@ -116,6 +116,32 @@ The cache is synced with [rclone](https://rclone.org/s3/), so any S3-compatible 
 winget source add --name selfhost --type Microsoft.PreIndexed.Package --arg https://your-domain.example.com/cache
 ```
 
+### Cloudflare R2
+
+Like `s3`, but also keeps Cloudflare's CDN fresh. After each sync, the changed URLs are purged, and a response header transform rule is updated to send the `x-ms-meta-sourceversion` header that Azure Blob Storage would, which winget reads to skip downloading an unchanged source.
+
+1. Create an R2 bucket, an R2 API token with write permission, and connect a custom domain to the bucket
+2. Create a response header transform rule on that zone (its contents are overwritten on each publish), and a Cloudflare API token with `Cache Purge` and `Response Header Transform Rules` edit permissions on the zone
+3. Create these repository variables and secrets:
+
+| Variable                | Value                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| `STORAGE_BACKEND`       | `cloudflare-r2`                                                                                          |
+| `S3_BUCKET`             | Bucket name                                                                                              |
+| `S3_ENDPOINT`           | `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`                                                          |
+| `CLOUDFLARE_PUBLIC_URL` | Public URL of the bucket's `cache` prefix, like `https://your-domain.example.com/cache`                  |
+| `CLOUDFLARE_RULE_URL`   | `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` of the rule |
+
+| Secret                  | Value                |
+| ----------------------- | -------------------- |
+| `AWS_ACCESS_KEY_ID`     | R2 access key ID     |
+| `AWS_SECRET_ACCESS_KEY` | R2 secret access key |
+| `CLOUDFLARE_API_TOKEN`  | Cloudflare API token |
+
+```sh
+winget source add --name selfhost --type Microsoft.PreIndexed.Package --arg https://your-domain.example.com/cache
+```
+
 ## Adding packages
 
 ### Manifests
@@ -156,10 +182,12 @@ Anthelion authenticates as a GitHub App so its pull requests trigger CI:
 
 ## Validation
 
-Changed manifests in pull requests are validated automatically by the [validate workflow](./.github/workflows/validate.yml): each installer is installed on a GitHub-hosted runner matching its architecture, with logs, an Attack Surface Analyzer SARIF report, and a desktop screenshot attached to the job summary. Limitations:
+Changed manifests in pull requests are validated automatically by the [validate workflow](./.github/workflows/validate.yml), from the CI workflow: each installer is installed on a GitHub-hosted runner matching its architecture, with logs, an Attack Surface Analyzer SARIF report, and a desktop screenshot attached to the job summary. Limitations:
 
 - Interactive installation is only tested if silent installation fails
 - The `arm` architecture (32-bit ARM) is not tested, because arm32 GitHub runners aren't available
+
+If a package depends on another package in this repository rather than winget-pkgs, set the `SOURCE_URL` repository variable to your published source URL so validation can resolve it.
 
 You can also validate manually with `SandboxTest` from winget-pkgs:
 
@@ -190,4 +218,4 @@ Enable **Computer Configuration > Administrative Templates > Windows Components 
 
 ## Credits
 
-Inspired by [ScoopInstaller/Extras](https://github.com/ScoopInstaller/Extras). See a real deployment at [pl4nty/winget-extras](https://github.com/pl4nty/winget-extras).
+Inspired by [ScoopInstaller/Extras](https://github.com/ScoopInstaller/Extras). See a real deployment at [pl4nty/winget-extras](https://github.com/pl4nty/winget-extras). The merge, publish and validation steps are composite actions from its [`.github/actions`](https://github.com/pl4nty/winget-extras/tree/main/.github/actions), pinned by commit and updated by Renovate.
