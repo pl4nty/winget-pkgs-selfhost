@@ -1,7 +1,11 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:best-practices"],
+	"extends": ["github>pl4nty/.github"],
 	"packageRules": [
+		{
+			"matchUpdateTypes": ["patch", "minor", "digest"],
+			"automerge": true
+		},
 		{
 			"matchManagers": "github-actions",
 			"minimumReleaseAge": "7 days"
@@ -17,6 +21,13 @@
 		{
 			"matchPackageNames": ["oxlint", "oxfmt"],
 			"groupName": "oxc ecosystem"
+		},
+		{
+			"description": "Shared actions from our own repository, which commits too often to ever reach a minimum release age",
+			"matchManagers": ["github-actions"],
+			"matchPackageNames": ["pl4nty/winget-extras{,/**}"],
+			"minimumReleaseAge": null,
+			"groupName": "winget-extras actions"
 		}
 	],
 	"customManagers": [

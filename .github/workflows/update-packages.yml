@@ -11,6 +11,10 @@ concurrency:
 
 permissions: {}
 
+defaults:
+  run:
+    shell: bash -euo pipefail {0}
+
 jobs:
   update-packages:
     name: Update Packages
@@ -18,20 +22,20 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Setup Environment
-        uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
+        uses: jdx/mise-action@9b200bcecbfd6303e69a4a261b2e09e3757440a7 # v5.2.0
         with:
-          version: 2026.7.7
+          version: 2026.10.17
           install_args: bun
 
       - name: Install Dependencies
         run: bun ci --production
 
-      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+      - uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         id: app-token
         with:
           client-id: ${{ vars.GH_CLIENT_ID }}
@@ -46,3 +50,4 @@ jobs:
           KOMAC_GITHUB_OWNER: ${{ github.repository_owner }}
           KOMAC_GITHUB_REPO: ${{ github.event.repository.name }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}

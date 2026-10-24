@@ -2,3 +2,5 @@
 manifests/** -text
 fonts/** -text
 cache/** -text
+shards/script/*.disabled linguist-language=TypeScript
+shards/json/*.disabled linguist-language=JSON

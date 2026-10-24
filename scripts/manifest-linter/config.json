@@ -1,0 +1,7 @@
+{
+	"ignore": {
+		"repository/contents": {
+			"manifests/.gitkeep": "keeps manifests/ in the template before any packages are added"
+		}
+	}
+}

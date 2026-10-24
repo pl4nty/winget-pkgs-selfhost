@@ -4,5 +4,5 @@ export default defineConfig({
 	useTabs: true,
 	singleQuote: true,
 	sortImports: {},
-	ignorePatterns: ['manifests/**', 'fonts/**', 'index/**', '.github/workflows/analyses.json'],
+	ignorePatterns: ['scripts/manifest-linter/generated/**', 'manifests/**', 'fonts/**', 'index/**'],
 });
