@@ -39,7 +39,7 @@ jobs:
           persist-credentials: false
 
       - name: Merge manifests
-        uses: pl4nty/winget-extras/.github/actions/merge@69ad27ce0f605f4799ce07e1c124c9afdb863585 # main
+        uses: pl4nty/winget-extras/.github/actions/merge@65eeb0a4079a8d6086f61f719161dcf0ccca7173 # main
 
       - parallel:
           - name: Upload merged manifests
@@ -78,7 +78,7 @@ jobs:
               path: ${{ runner.temp }}/manifests
 
       - name: Publish source
-        uses: pl4nty/winget-extras/.github/actions/publish@69ad27ce0f605f4799ce07e1c124c9afdb863585 # main
+        uses: pl4nty/winget-extras/.github/actions/publish@65eeb0a4079a8d6086f61f719161dcf0ccca7173 # main
         with:
           index-tool-repo: ${{ vars.INDEX_TOOL_REPO || 'pl4nty/winget-pkgs-selfhost' }}
           signing-backend: ${{ vars.SIGNING_BACKEND }}
