@@ -6,15 +6,21 @@
 		"test:shard": "anthelion-test",
 		"fmt": "bun --bun oxfmt",
 		"lint": "bun --bun oxlint --type-check --type-aware",
-		"manifests:check": "bun scripts/lint-manifests.mjs",
-		"manifests:fix": "bun scripts/lint-manifests.mjs --fix"
+		"test:manifests": "bun test scripts",
+		"manifests:check": "bun --experimental-http2-fetch scripts/manifest-linter",
+		"manifests:fix": "bun --experimental-http2-fetch scripts/manifest-linter --fix",
+		"manifests:move": "bun scripts/move-package.ts"
 	},
 	"dependencies": {
-		"anthelion": "github:UnownPlain/anthelion-external#fc5452e0bdd0885b60b3e6eafe332f1c3567bc2e"
+		"anthelion": "github:UnownPlain/anthelion-external#e5fe2319babfb142923d871c1f616a2591b6b1eb",
+		"fflate": "0.8.3",
+		"unicode-case-folding": "1.1.2"
 	},
 	"devDependencies": {
-		"oxfmt": "0.59.0",
-		"oxlint": "1.74.0",
-		"oxlint-tsgolint": "0.25.0"
+		"@parcel/codeframe": "2.16.4",
+		"@types/bun": "1.4.3",
+		"oxfmt": "0.74.0",
+		"oxlint": "1.89.0",
+		"oxlint-tsgolint": "7.0.2004"
 	}
 }

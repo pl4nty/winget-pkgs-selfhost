@@ -1,7 +1,11 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:best-practices"],
+	"extends": ["github>pl4nty/.github"],
 	"packageRules": [
+		{
+			"matchUpdateTypes": ["patch", "minor", "digest"],
+			"automerge": true
+		},
 		{
 			"matchManagers": "github-actions",
 			"minimumReleaseAge": "7 days"

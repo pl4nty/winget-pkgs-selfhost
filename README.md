@@ -141,11 +141,13 @@ komac update Publisher.Package --version 1.2.3 --urls https://example.com/setup-
 
 Komac downloads the installers, fills in the hashes and metadata, and opens a pull request against `$KOMAC_GITHUB_OWNER/$KOMAC_GITHUB_REPO` instead of the default `microsoft/winget-pkgs`. Add `--dry-run --output <dir>` to write the manifests locally without opening a pull request. [wingetcreate](https://github.com/microsoft/winget-create) also works if you prefer to author manifests by hand.
 
+Run `bun manifests:check` to lint manifests against the repository policy, and `bun manifests:fix` to apply automatic fixes. Exceptions go in [`scripts/manifest-linter/config.json`](./scripts/manifest-linter/config.json), see the [linter README](./scripts/manifest-linter/README.md). `bun manifests:move <old identifier> <new identifier>` renames a package along with its shard.
+
 On merge to `main`, the [publish workflow](./.github/workflows/publish.yml) merges the manifests, resolves [winget-pkgs](https://github.com/microsoft/winget-pkgs) dependencies, builds the preindexed source package with `IndexCreationTool`, signs it, and uploads it to your storage backend.
 
 ### Automated updates (Anthelion)
 
-Add a shard at `shards/json/<PackageIdentifier>.json` describing how to detect new versions, and the [update workflow](./.github/workflows/update-packages.yml) runs [Anthelion](https://github.com/UnownPlain/anthelion) on a schedule to open a pull request via Komac when a new version is found. See Anthelion's [CONTRIBUTING.md](https://github.com/UnownPlain/anthelion/blob/main/CONTRIBUTING.md) for the shard format, the available strategies, and how to test a shard locally with `bun test:shard <PackageIdentifier> --dry-run`. Suffix a shard filename with `.disabled` to skip it.
+Add a shard at `shards/json/<PackageIdentifier>.json` describing how to detect new versions (font shards append `.Font`, like `shards/json/<PackageIdentifier>.Font.json`), and the [update workflow](./.github/workflows/update-packages.yml) runs [Anthelion](https://github.com/UnownPlain/anthelion) on a schedule to open a pull request via Komac when a new version is found. See Anthelion's [CONTRIBUTING.md](https://github.com/UnownPlain/anthelion/blob/main/CONTRIBUTING.md) for the shard format, the available strategies, and how to test a shard locally with `bun test:shard <PackageIdentifier> --dry-run`. Suffix a shard filename with `.disabled` to skip it.
 
 Anthelion authenticates as a GitHub App so its pull requests trigger CI:
 
