@@ -35,7 +35,7 @@ jobs:
 
       - name: Detect installers
         id: matrix
-        uses: pl4nty/winget-extras/.github/actions/validate-detect@65eeb0a4079a8d6086f61f719161dcf0ccca7173 # main
+        uses: pl4nty/winget-extras/.github/actions/validate-detect@65eeb0a4079a8d6086f61f719161dcf0ccca7173 # main # zizmor: ignore[ref-version-mismatch,stale-action-refs] commit pins to a branch that moves constantly
         with:
           # The schedule fallback populates the Attack Surface Analyzer baseline cache
           package-id: ${{ inputs.package_id || (github.event_name == 'schedule' && 'Microsoft.ConfigMgr.SupportCenter' || '') }}
@@ -65,7 +65,7 @@ jobs:
             ${{ matrix.installer.path }}
 
       - name: Validate
-        uses: pl4nty/winget-extras/.github/actions/validate@65eeb0a4079a8d6086f61f719161dcf0ccca7173 # main
+        uses: pl4nty/winget-extras/.github/actions/validate@65eeb0a4079a8d6086f61f719161dcf0ccca7173 # main # zizmor: ignore[ref-version-mismatch,stale-action-refs] commit pins to a branch that moves constantly
         with:
           path: ${{ matrix.installer.path }}
           arch: ${{ matrix.installer.arch }}
