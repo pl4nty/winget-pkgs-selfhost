@@ -1,11 +1,7 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:best-practices"],
+	"extends": ["github>pl4nty/.github"],
 	"packageRules": [
-		{
-			"matchManagers": "github-actions",
-			"minimumReleaseAge": "7 days"
-		},
 		{
 			"matchManagers": "mise",
 			"minimumReleaseAge": "3 days"
@@ -16,6 +12,7 @@
 		},
 		{
 			"matchPackageNames": ["oxlint", "oxfmt"],
+			"matchUpdateTypes": ["major"],
 			"groupName": "oxc ecosystem"
 		}
 	],
