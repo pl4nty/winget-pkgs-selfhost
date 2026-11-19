@@ -7,10 +7,6 @@
 			"automerge": true
 		},
 		{
-			"matchManagers": "github-actions",
-			"minimumReleaseAge": "7 days"
-		},
-		{
 			"matchManagers": "mise",
 			"minimumReleaseAge": "3 days"
 		},
@@ -20,6 +16,7 @@
 		},
 		{
 			"matchPackageNames": ["oxlint", "oxfmt"],
+			"matchUpdateTypes": ["major"],
 			"groupName": "oxc ecosystem"
 		},
 		{
