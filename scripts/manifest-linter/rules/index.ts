@@ -1,0 +1,56 @@
+import { encodingRule } from '@/scripts/manifest-linter/rules/file/encoding';
+import { fileModeRule } from '@/scripts/manifest-linter/rules/file/mode';
+import { archiveRule } from '@/scripts/manifest-linter/rules/installer/archive';
+import { githubHostRule } from '@/scripts/manifest-linter/rules/installer/github-host';
+import { githubPinningRule } from '@/scripts/manifest-linter/rules/installer/github-pinning';
+import { installerMetadataRule } from '@/scripts/manifest-linter/rules/installer/metadata';
+import { switchesRule } from '@/scripts/manifest-linter/rules/installer/switches';
+import { arpDisplayNameVersionRule } from '@/scripts/manifest-linter/rules/repository/arp-display-name-version';
+import { arpVersionRangesRule } from '@/scripts/manifest-linter/rules/repository/arp-version-ranges';
+import { repositoryContentsRule } from '@/scripts/manifest-linter/rules/repository/contents';
+import { copyrightFormatRule } from '@/scripts/manifest-linter/rules/repository/copyright-format';
+import { descriptionPunctuationRule } from '@/scripts/manifest-linter/rules/repository/description-punctuation';
+import { dryRunRule } from '@/scripts/manifest-linter/rules/repository/dry-run';
+import { githubIdentityRule } from '@/scripts/manifest-linter/rules/repository/github-identity';
+import { identifierCasingRule } from '@/scripts/manifest-linter/rules/repository/identifier-casing';
+import { licenseSpdxRule } from '@/scripts/manifest-linter/rules/repository/license-spdx';
+import { manifestPathRule } from '@/scripts/manifest-linter/rules/repository/manifest-path';
+import { manifestSetRule } from '@/scripts/manifest-linter/rules/repository/manifest-set';
+import { packageKindRule } from '@/scripts/manifest-linter/rules/repository/package-kind';
+import { schemaHeaderRule } from '@/scripts/manifest-linter/rules/repository/schema-header';
+import { shardCoverageRule } from '@/scripts/manifest-linter/rules/repository/shard-coverage';
+import { upstreamVersionsRule } from '@/scripts/manifest-linter/rules/repository/upstream-versions';
+import { yamlFilesRule } from '@/scripts/manifest-linter/rules/repository/yaml-files';
+import type { Rule } from '@/scripts/manifest-linter/types';
+
+/**
+ * The complete policy is composed here. Adding a rule means creating one file,
+ * testing it beside that file, and registering it in this list.
+ */
+export const defaultRules: readonly Rule[] = [
+	encodingRule,
+	fileModeRule,
+	yamlFilesRule,
+	schemaHeaderRule,
+	identifierCasingRule,
+	manifestSetRule,
+	manifestPathRule,
+	packageKindRule,
+	repositoryContentsRule,
+	arpVersionRangesRule,
+	arpDisplayNameVersionRule,
+	shardCoverageRule,
+	licenseSpdxRule,
+	copyrightFormatRule,
+	descriptionPunctuationRule,
+	githubIdentityRule,
+	upstreamVersionsRule,
+	installerMetadataRule,
+	archiveRule,
+	switchesRule,
+	githubHostRule,
+	githubPinningRule,
+];
+
+/** Rules that only run when selected with `--rule`. */
+export const optInRules: readonly Rule[] = [dryRunRule];
