@@ -23,7 +23,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Environment
-        uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
+        uses: jdx/mise-action@d5574b52816a478f9d4e6529a3f6ff17a8a36785 # v5.2.8
         with:
           version: 2026.7.7
           install_args: bun
